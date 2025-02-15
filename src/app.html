@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	%sveltekit.head%
+	<style>
+		/* Add this in your global styles or LayerPanel.svelte */
+		.layer-item {
+			padding: 8px;
+			border-bottom: 1px solid #ccc;
+		}
+
+		.layer-item:hover {
+			background-color: #f9f9f9;
+		}
+
+		.loading-spinner {
+			width: 16px;
+			height: 16px;
+			border: 2px solid #ccc;
+			border-top: 2px solid #333;
+			border-radius: 50%;
+			animation: spin 1s linear infinite;
+			margin-left: 10px;
+		}
+
+		@keyframes spin {
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		.error-indicator {
+			color: red;
+			font-size: 12px;
+			margin-left: 10px;
+		}
+	</style>
+</head>
+
+<body data-sveltekit-preload-data="hover">
+	<div style="display: contents">%sveltekit.body%</div>
+</body>
+
+</html>
