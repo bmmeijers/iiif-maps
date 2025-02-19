@@ -80,11 +80,18 @@
         {layer.zIndex} &UpArrow;
       </button> -->
     </legend>
-    {#if layer.settings.type === "IIIF"}
-      <div>Opacity: 
-        <input disabled={layer.isLoading || layer.hasError} type="range" min="0" max="1" step="0.05" bind:value={opacity} on:input={handleOpacityChange} />
-      </div>
-    {/if}
+    <div>
+      Opacity:
+      <input
+        disabled={layer.isLoading || layer.hasError}
+        type="range"
+        min="0"
+        max="1"
+        step="0.05"
+        bind:value={opacity}
+        on:input={handleOpacityChange}
+      />
+    </div>
     {#if layer.settings.type === "IIIF"}
       <span class="iiif"></span>
     {:else}
