@@ -1,8 +1,8 @@
 // src/layerHelpers.js
 
 import TileLayer from 'ol/layer/Tile';
-import XYZ from 'ol/source/XYZ';
-import { TileWMS } from 'ol/source';
+// import XYZ from 'ol/source/XYZ';
+// import { TileWMS } from 'ol/source';
 import WMTS, { optionsFromCapabilities } from 'ol/source/WMTS.js';
 import WMTSCapabilities from 'ol/format/WMTSCapabilities.js';
 import { WarpedMapLayer } from '@allmaps/openlayers';
@@ -13,7 +13,7 @@ import GeoJSON from 'ol/format/GeoJSON.js';
 
 import Style from 'ol/style/Style.js';
 import Stroke from 'ol/style/Stroke.js';
-import Text from 'ol/style/Text.js';
+// import Text from 'ol/style/Text.js';
 import CircleStyle from 'ol/style/Circle.js';
 import Fill from 'ol/style/Fill.js';
 
@@ -31,7 +31,7 @@ export async function initializeLayer(source) {
             opacity: 1,
             source: new WMTS(options)
         });
-        console.log(olLayer)
+        // console.log(olLayer)
         return { 'layer': olLayer }
     }
     else if (source.settings.type === "vector") {
@@ -64,7 +64,7 @@ export async function initializeLayer(source) {
         });
         return { 'layer': layer };
     } else if (source.settings.type == 'IIIF') {
-        console.log('iiif')
+        // console.log('iiif')
         let olLayer = new WarpedMapLayer();
         olLayer.clear();
         let ids = undefined;
@@ -80,8 +80,8 @@ export async function initializeLayer(source) {
         let masks = [];
         for (const mapId of ids) {
             let mask = olLayer?.getWarpedMap(mapId)?.geoMask;
-            console.log(olLayer.getWarpedMap(mapId).geoMask)
-            console.log(olLayer.getWarpedMap(mapId))
+            // console.log(olLayer.getWarpedMap(mapId).geoMask)
+            // console.log(olLayer.getWarpedMap(mapId))
             // console.log(
             let tiny = olLayer.getWarpedMap(mapId).georeferencedMap.resource.id + "/full/128,/0/default.jpg";
             // masks.push([mapId, mask, tiny]);

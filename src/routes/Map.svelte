@@ -14,7 +14,7 @@
     let layerList = [];
 
     layers.subscribe((value) => {
-        console.log("layers.subscribe()");
+        // console.log("layers.subscribe()");
         layerList = value;
     });
 
@@ -46,6 +46,11 @@
             },
             {
                 type: "IIIF",
+                name: "Waterstaatskaart (editie 1 · nabewerkt, UU)",
+                url: "https://sammeltassen.nl/iiif-manifests/allmaps/waterstaatskaart-1e-ed-uu.json",
+            },
+            {
+                type: "IIIF",
                 name: "Waterstaatskaart (editie 1, UU)",
                 url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1/latest.json",
             },
@@ -71,8 +76,13 @@
             },
             {
                 type: "vector",
-                name: "Graticule (RD)",
+                name: "Bladindeling (1:50k / RD)",
                 url: "rdCannonicalSheetIndex.json",
+            },
+            {
+                type: "vector",
+                name: "Bladindeling (TMK / Bonne)",
+                url: "bonneCannonicalSheetIndex.json",
             },
         ];
 
@@ -88,7 +98,7 @@
                 layer.olLayer = olLayer = result.layer;
                 layer.isLoading = false;
                 if (olLayer) {
-                    console.log("adding to map");
+                    // console.log("adding to map");
                     map.addLayer(olLayer);
                     olLayer.setZIndex(layer.zIndex);
                     olLayer.setVisible(layer.isVisible);
@@ -99,12 +109,29 @@
     });
 </script>
 
-<div id="map" style="width: 100%; height: 70vh; border: 1px solid black;"></div>
-
-<TocPanel></TocPanel>
+<div class="container">
+    <div id="map"></div>
+    <div id="toc">
+        <TocPanel></TocPanel>
+    </div>
+</div>
 
 <style>
+    .container {
+        display: grid;
+        grid-template-columns: 70% 1fr;
+        height: 100vh;
+    }
+
     #map {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        border: 1px solid black;
         /* Map styling */
+    }
+    #toc {
+        overflow-y: scroll;
     }
 </style>
