@@ -4,6 +4,15 @@
   export let updateZIndex;
 
   let isVisible = layer.isVisible;
+  let opacity = 1; // Default opacity value
+
+  function handleOpacityChange(event) {
+    opacity = Number(event.target.value);
+    console.log("Change opacity : " + opacity);
+    if (layer.olLayer) {
+      layer.olLayer.setOpacity(opacity);
+    }
+  }
   let isExpanded = false;
 
   function toggleExpand() {
@@ -61,6 +70,7 @@
         disabled={layer.isLoading || layer.hasError}
         id="toc-item-{layer.id}"
       />
+
       <label for="toc-item-{layer.id}">{layer.name}</label>
 
       <!-- <button disabled={layer.zIndex === 0} on:click={down}>
@@ -70,6 +80,11 @@
         {layer.zIndex} &UpArrow;
       </button> -->
     </legend>
+    {#if layer.settings.type === "IIIF"}
+      <div>Opacity: 
+        <input disabled={layer.isLoading || layer.hasError} type="range" min="0" max="1" step="0.05" bind:value={opacity} on:input={handleOpacityChange} />
+      </div>
+    {/if}
     {#if layer.settings.type === "IIIF"}
       <span class="iiif"></span>
     {:else}
