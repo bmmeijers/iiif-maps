@@ -39,6 +39,13 @@
         // Load layers from settings file
         const settingsLayers = [
             {
+                type: "WMS",
+                name: "AHN",
+                url: "https://service.pdok.nl/rws/ahn/wms/v1_0",
+                // layerName: "dtm_05m",
+                params: { 'LAYERS': 'dsm_05m', 'TILED': true }
+            },
+            {
                 type: "WMTS",
                 name: "BRT Water",
                 url: "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0?request=getcapabilities&service=wmts",

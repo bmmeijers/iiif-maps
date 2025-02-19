@@ -1,9 +1,11 @@
 // src/layerHelpers.js
 
 import TileLayer from 'ol/layer/Tile';
+
 // import XYZ from 'ol/source/XYZ';
 // import { TileWMS } from 'ol/source';
 import WMTS, { optionsFromCapabilities } from 'ol/source/WMTS.js';
+import TileWMS from 'ol/source/TileWMS.js';
 import WMTSCapabilities from 'ol/format/WMTSCapabilities.js';
 import { WarpedMapLayer } from '@allmaps/openlayers';
 
@@ -34,6 +36,36 @@ export async function initializeLayer(source) {
         // console.log(olLayer)
         return { 'layer': olLayer }
     }
+    else if (source.settings.type === "WMS") {
+        // let capabilities = await fetch(source.settings.url);
+        // const parser = new WMTSCapabilities();
+        // const parsed = parser.read(await capabilities.text());
+        // const options = optionsFromCapabilities(parsed, {
+        //     layer: source.settings.layerName,
+        //     matrixSet: 'EPSG:3857'
+        // });
+        // let olLayer = new TileLayer({
+        //     opacity: 1,
+        //     source: new WMTS(options)
+        // });
+
+        let olLayer = new TileLayer({
+            // extent: [-13884991, 2870341, -7455066, 6338219],
+            source: new TileWMS({
+                url: source.settings.url,
+                params: source.settings.params,
+                //   serverType: 'geoserver',
+                // Countries have transparency, so do not fade tiles:
+                transition: 1
+                // transparent: true,
+                // bgcolor: 0xffff,
+            })
+        });
+        // console.log(olLayer)
+        return { 'layer': olLayer }
+    }
+    
+
     else if (source.settings.type === "vector") {
         let layer = new VectorLayer({
             source: new VectorSource({
