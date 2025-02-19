@@ -103,7 +103,7 @@
             <img
               src={m}
               loading="lazy"
-              width="256"
+              width="128"
               alt="Thumbnail for {m}"
               class="rounded-border"
             />

@@ -83,7 +83,7 @@ export async function initializeLayer(source) {
             // console.log(olLayer.getWarpedMap(mapId).geoMask)
             // console.log(olLayer.getWarpedMap(mapId))
             // console.log(
-            let tiny = olLayer.getWarpedMap(mapId).georeferencedMap.resource.id + "/full/128,/0/default.jpg";
+            let tiny = olLayer.getWarpedMap(mapId).georeferencedMap.resource.id + "/full/256,/0/default.jpg";
             // masks.push([mapId, mask, tiny]);
             masks.push([tiny]);
         }
