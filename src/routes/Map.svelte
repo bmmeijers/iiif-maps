@@ -44,6 +44,7 @@
                 url: "https://service.pdok.nl/rws/ahn/wms/v1_0",
                 // layerName: "dtm_05m",
                 params: { LAYERS: "dsm_05m", TILED: true },
+                isVisible: false,
             },
             {
                 type: "WMTS",
@@ -55,26 +56,31 @@
                 type: "IIIF",
                 name: "Waterstaatskaart (editie 1 · nabewerkt, UU)",
                 url: "https://sammeltassen.nl/iiif-manifests/allmaps/waterstaatskaart-1e-ed-uu.json",
+                isVisible: false,
             },
             {
                 type: "IIIF",
                 name: "Waterstaatskaart (editie 1, UU)",
                 url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1/latest.json",
+                isVisible: false,
             },
             {
                 type: "IIIF",
                 name: "Waterstaatskaart (editie 2, UU)",
                 url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_2/latest.json",
+                isVisible: false,
             },
             {
                 type: "IIIF",
                 name: "Waterstaatskaart (editie 3, UU)",
                 url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_3/latest.json",
+                isVisible: false,
             },
             {
                 type: "IIIF",
                 name: "Waterstaatskaart (editie 4, UU)",
                 url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4/latest.json",
+                isVisible: false,
             },
             {
                 type: "IIIF",
@@ -90,6 +96,7 @@
                 type: "vector",
                 name: "Bladindeling (TMK, 🌐 Bonne)",
                 url: "bonneCannonicalSheetIndex.json",
+                isVisible: false,
             },
         ];
 

@@ -13,7 +13,7 @@ export function loadLayers(settingsLayers) {
       name: layerSettings.name,
       settings: layerSettings,
       olLayers: [],
-      isVisible: true,
+      isVisible: layerSettings.isVisible !== undefined ? layerSettings.isVisible : true,
       isLoading: true,
       hasError: false,
       iconImageUrls: null,
