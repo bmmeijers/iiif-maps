@@ -8,9 +8,9 @@
 
   function handleOpacityChange(event) {
     opacity = Number(event.target.value);
-    console.log("Change opacity : " + opacity);
-    if (layer.olLayer) {
-      layer.olLayer.setOpacity(opacity);
+    // console.log("Change opacity : " + opacity);
+    if (layer.olLayers) {
+      layer.olLayers.forEach((l) => l.setOpacity(opacity));
     }
   }
   let isExpanded = false;
@@ -26,10 +26,9 @@
     // if (layer.olLayer) {
     //   layer.olLayer.setVisible(isVisible);
     // }
-    if (layer.olLayers.length > 0)
-    {
-      layer.olLayers.forEach(element => {
-        element.setVisible(isVisible)
+    if (layer.olLayers.length > 0) {
+      layer.olLayers.forEach((element) => {
+        element.setVisible(isVisible);
       });
     }
   }
@@ -129,7 +128,7 @@
         {#if isExpanded}
           {#each layer.iconImageUrls as src}
             <img
-              src={src}
+              {src}
               loading="lazy"
               width="128"
               alt="Thumbnail for {src}"
