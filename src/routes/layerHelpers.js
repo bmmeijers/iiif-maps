@@ -156,6 +156,13 @@ export async function initializeLayer(source) {
         const vectorLayer = new VectorLayer({
             source: vectorSource,
             // style: styleFunction
+            style: new Style({
+                fill: null,
+                stroke: new Stroke({
+                    color: 'rgba(68, 15, 133, 0.65)',
+                    width: 0.5
+                })
+            })
         });
 
 
