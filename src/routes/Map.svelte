@@ -43,7 +43,7 @@
                 name: "AHN",
                 url: "https://service.pdok.nl/rws/ahn/wms/v1_0",
                 // layerName: "dtm_05m",
-                params: { 'LAYERS': 'dsm_05m', 'TILED': true }
+                params: { LAYERS: "dsm_05m", TILED: true },
             },
             {
                 type: "WMTS",
@@ -83,12 +83,12 @@
             },
             {
                 type: "vector",
-                name: "Bladindeling (1:50k / RD)",
+                name: "Bladindeling (1:50k, 🌐 Rijksdriehoekstelsel)",
                 url: "rdCannonicalSheetIndex.json",
             },
             {
                 type: "vector",
-                name: "Bladindeling (TMK / Bonne)",
+                name: "Bladindeling (TMK, 🌐 Bonne)",
                 url: "bonneCannonicalSheetIndex.json",
             },
         ];
@@ -97,19 +97,19 @@
         loadLayers(settingsLayers);
 
         // Initialize layers
-        layerList.forEach((layer) => {
-            initializeLayer(layer).then((result) => {
-                // console.log("second", second)
-                let olLayer = null;
-                layer.masks = result.masks;
-                layer.olLayer = olLayer = result.layer;
-                layer.isLoading = false;
-                if (olLayer) {
-                    // console.log("adding to map");
-                    map.addLayer(olLayer);
-                    olLayer.setZIndex(layer.zIndex);
-                    olLayer.setVisible(layer.isVisible);
-                }
+        layerList.forEach((setting) => {
+            initializeLayer(setting).then((result) => {
+                let initedLayers = result.layers;
+                initedLayers.forEach((l) => {
+                    // if (l) {
+                        map.addLayer(l);
+                        l.setZIndex(setting.zIndex);
+                        l.setVisible(setting.isVisible);
+                        setting.olLayers.push(l);
+                    // }
+                });
+                setting.iconImageUrls = result.iconImageUrls;
+                setting.isLoading = false;
                 layers.set([...layerList]);
             });
         });

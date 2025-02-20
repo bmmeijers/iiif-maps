@@ -10,19 +10,19 @@
     layerList = value;
   });
 
-  function updateLayerZIndex(layerId, newZIndex) {
-    // console.log("updatelayer called");
-    const layer = layerList.findIndex((l) => l.id === layerId);
-    if (layer) {
-      // console.log(layer);
-      let item = layerList[layer];
-      item.olLayer.setZIndex(newZIndex);
-      item.zIndex = newZIndex;
-      layerList[layer] = item;
-      layers.set([...layerList]);
-      // Trigger any necessary updates to the map here
-    }
-  }
+  // function updateLayerZIndex(layerId, newZIndex) {
+  //   // console.log("updatelayer called");
+  //   const layer = layerList.findIndex((l) => l.id === layerId);
+  //   if (layer) {
+  //     // console.log(layer);
+  //     let item = layerList[layer];
+  //     item.olLayer.setZIndex(newZIndex);
+  //     item.zIndex = newZIndex;
+  //     layerList[layer] = item;
+  //     layers.set([...layerList]);
+  //     // Trigger any necessary updates to the map here
+  //   }
+  // }
 
   onDestroy(() => {
     unsubscribe();

@@ -34,7 +34,7 @@ export async function initializeLayer(source) {
             source: new WMTS(options)
         });
         // console.log(olLayer)
-        return { 'layer': olLayer }
+        return { 'layer': olLayer, 'layers': [olLayer] }
     }
     else if (source.settings.type === "WMS") {
         // let capabilities = await fetch(source.settings.url);
@@ -62,9 +62,9 @@ export async function initializeLayer(source) {
             })
         });
         // console.log(olLayer)
-        return { 'layer': olLayer }
+        return { 'layer': olLayer, 'layers': [olLayer] };
     }
-    
+
 
     else if (source.settings.type === "vector") {
         let layer = new VectorLayer({
@@ -94,7 +94,7 @@ export async function initializeLayer(source) {
             // 	})
             // })
         });
-        return { 'layer': layer };
+        return { 'layer': layer, 'layers': [layer] };
     } else if (source.settings.type == 'IIIF') {
         // console.log('iiif')
         let olLayer = new WarpedMapLayer();
@@ -109,17 +109,57 @@ export async function initializeLayer(source) {
         }
         // // let ids = await s.addGeoreferenceAnnotationByUrl(source.url); // .then((ids) => {
         // // console.log(ids);
-        let masks = [];
+        let iconImageUrls = [];
+        let pairs = [];
         for (const mapId of ids) {
             let mask = olLayer?.getWarpedMap(mapId)?.geoMask;
             // console.log(olLayer.getWarpedMap(mapId).geoMask)
             // console.log(olLayer.getWarpedMap(mapId))
             // console.log(
-            let tiny = olLayer.getWarpedMap(mapId).georeferencedMap.resource.id + "/full/256,/0/default.jpg";
+            let iconImageUrl = olLayer.getWarpedMap(mapId).georeferencedMap.resource.id + "/full/256,/0/default.jpg";
             // masks.push([mapId, mask, tiny]);
-            masks.push([tiny]);
+            iconImageUrls.push([iconImageUrl]);
+            pairs.push([mapId, mask])
         }
-        return { 'layer': olLayer, 'masks': masks };
+
+        // FIXME: the following makes a geojson layer of the masks
+        // If we would store a list of olLayers we could handle this
+        // [mapId, mask]
+        let features = pairs.map((pair) => {
+            let [mapId, mask] = pair;
+            return {
+                type: 'Feature',
+                geometry: mask,
+                properties: {
+                    mapId: mapId
+                }
+            };
+            // ;
+            // return f;
+        });
+        console.log(features);
+
+        // Compose the feature collection
+        let collection = {
+            type: 'FeatureCollection',
+            features: features
+        };
+
+        // Create a vector source from the GeoJSON data
+        const vectorSource = new VectorSource({
+            features: new GeoJSON().readFeatures(collection, {
+                dataProjection: 'EPSG:4326',
+                featureProjection: 'EPSG:3857'
+            })
+        });
+
+        const vectorLayer = new VectorLayer({
+            source: vectorSource,
+            // style: styleFunction
+        });
+
+
+        return { 'layer': olLayer, 'iconImageUrls': iconImageUrls, 'layers': [olLayer, vectorLayer] };
     }
 
 }

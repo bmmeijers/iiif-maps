@@ -1,7 +1,7 @@
 <!-- src/TocItem.svelte -->
 <script>
   export let layer;
-  export let updateZIndex;
+  // export let updateZIndex;
 
   let isVisible = layer.isVisible;
   let opacity = 1; // Default opacity value
@@ -23,19 +23,25 @@
     isVisible = !isVisible;
     console.log("Toggle visibility : " + isVisible);
     layer.isVisible = isVisible;
-    if (layer.olLayer) {
-      layer.olLayer.setVisible(isVisible);
+    // if (layer.olLayer) {
+    //   layer.olLayer.setVisible(isVisible);
+    // }
+    if (layer.olLayers.length > 0)
+    {
+      layer.olLayers.forEach(element => {
+        element.setVisible(isVisible)
+      });
     }
   }
 
-  function up() {
-    layer.zIndex += 1;
-    updateZIndex(layer.id, layer.zIndex);
-  }
-  function down() {
-    layer.zIndex -= 1;
-    updateZIndex(layer.id, layer.zIndex);
-  }
+  // function up() {
+  //   layer.zIndex += 1;
+  //   updateZIndex(layer.id, layer.zIndex);
+  // }
+  // function down() {
+  //   layer.zIndex -= 1;
+  //   updateZIndex(layer.id, layer.zIndex);
+  // }
 </script>
 
 <!-- 
@@ -121,12 +127,12 @@
 
       <div>
         {#if isExpanded}
-          {#each layer.masks as m}
+          {#each layer.iconImageUrls as src}
             <img
-              src={m}
+              src={src}
               loading="lazy"
               width="128"
-              alt="Thumbnail for {m}"
+              alt="Thumbnail for {src}"
               class="rounded-border"
             />
           {/each}
