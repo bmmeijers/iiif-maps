@@ -12,7 +12,6 @@ export function loadLayers(settingsLayers) {
       zIndex: zIndexCounter++,
       name: layerSettings.name,
       settings: layerSettings,
-      olLayer: null, // Will hold the OpenLayers layer instance
       olLayers: [],
       isVisible: true,
       isLoading: true,
