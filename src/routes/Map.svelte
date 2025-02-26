@@ -50,7 +50,6 @@
                 type: "WMS",
                 name: "Luchtfoto (8cm)",
                 url: "https://service.pdok.nl/hwh/luchtfotorgb/wms/v1_0",
-                // layerName: "dtm_05m",
                 params: { LAYERS: "Actueel_orthoHR", TILED: true },
                 isVisible: false,
             },
