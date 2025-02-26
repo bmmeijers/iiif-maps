@@ -80,7 +80,7 @@ export async function initializeLayer(source) {
                 }),
                 stroke: new Stroke({
                     color: 'darkgreen',
-                    width: 1
+                    width: 0.25
                 })
                 // text: createTextStyle(feature, resolution, myDom.points)
             })

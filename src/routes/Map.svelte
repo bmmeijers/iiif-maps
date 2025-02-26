@@ -47,10 +47,19 @@
                 isVisible: false,
             },
             {
+                type: "WMS",
+                name: "Luchtfoto (8cm)",
+                url: "https://service.pdok.nl/hwh/luchtfotorgb/wms/v1_0",
+                // layerName: "dtm_05m",
+                params: { LAYERS: "Actueel_orthoHR", TILED: true },
+                isVisible: false,
+            },
+            {
                 type: "WMTS",
                 name: "BRT Water",
                 url: "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0?request=getcapabilities&service=wmts",
                 layerName: "water",
+                isVisible: true,
             },
             {
                 type: "IIIF",
@@ -68,7 +77,7 @@
                 type: "IIIF",
                 name: "Waterstaatskaart (editie 2, UU)",
                 url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_2/latest.json",
-                isVisible: false,
+                isVisible: true,
             },
             {
                 type: "IIIF",
@@ -86,17 +95,25 @@
                 type: "IIIF",
                 name: "Waterstaatskaart (editie 5, UU)",
                 url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest.json",
+                isVisible: false,
             },
             {
                 type: "vector",
                 name: "Bladindeling (1:50k, 🌐 Rijksdriehoekstelsel)",
                 url: "rdCannonicalSheetIndex.json",
+                isVisible: false,
             },
             {
                 type: "vector",
                 name: "Bladindeling (TMK, 🌐 Bonne)",
                 url: "bonneCannonicalSheetIndex.json",
                 isVisible: false,
+            },
+            {
+                type: "vector",
+                name: "Graticule (🌐 Krayenhoff)",
+                url: "graticule_geographic_krayenhoff.geojson",
+                isVisible: true,
             },
         ];
 
