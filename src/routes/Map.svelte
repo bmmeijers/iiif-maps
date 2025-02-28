@@ -1,4 +1,3 @@
-<!-- src/Map.svelte -->
 <script>
   import { onMount } from "svelte";
   import "ol/ol.css";
@@ -14,10 +13,9 @@
   let map;
   let coordTransformer;
 
-  let layerList = [];
+  let layerList = $state([]);
 
   layers.subscribe((value) => {
-    // console.log("layers.subscribe()");
     layerList = value;
   });
 
@@ -257,10 +255,16 @@
 <div class="container">
   <div id="map"></div>
   <div id="toc">
-    <fieldset style="margin:8px; padding:8px; font-family: sans-serif; font-size: smaller;">
+    <fieldset
+      style="margin:8px; padding:8px; font-family: sans-serif; font-size: smaller;"
+    >
       <div id="mouse-position"></div>
     </fieldset>
-    <TocPanel></TocPanel>
+    <TocPanel
+      zoomToExtentFn={(extent) => {
+        map.getView().fit(extent, { duration: 1000 });
+      }}
+    ></TocPanel>
   </div>
 </div>
 

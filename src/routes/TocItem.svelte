@@ -1,19 +1,15 @@
-<!-- src/TocItem.svelte -->
 <script>
-  export let layer;
-  // export let updateZIndex;
-
-  let isVisible = layer.isVisible;
-  let opacity = 1; // Default opacity value
+  let { layer = $bindable(), zoomToExtentFn } = $props();
+  let isVisible = $state(layer.isVisible);
+  let opacity = $state(1);
+  let isExpanded = $state(false);
 
   function handleOpacityChange(event) {
     opacity = Number(event.target.value);
-    // console.log("Change opacity : " + opacity);
     if (layer.olLayers) {
       layer.olLayers.forEach((l) => l.setOpacity(opacity));
     }
   }
-  let isExpanded = false;
 
   function toggleExpand() {
     isExpanded = !isExpanded;
@@ -23,47 +19,13 @@
     isVisible = !isVisible;
     console.log("Toggle visibility : " + isVisible);
     layer.isVisible = isVisible;
-    // if (layer.olLayer) {
-    //   layer.olLayer.setVisible(isVisible);
-    // }
     if (layer.olLayers.length > 0) {
       layer.olLayers.forEach((element) => {
         element.setVisible(isVisible);
       });
     }
   }
-
-  // function up() {
-  //   layer.zIndex += 1;
-  //   updateZIndex(layer.id, layer.zIndex);
-  // }
-  // function down() {
-  //   layer.zIndex -= 1;
-  //   updateZIndex(layer.id, layer.zIndex);
-  // }
 </script>
-
-<!-- 
--- In TocItem.svelte 
-<script>
-  let isExpanded = false;
-
-  function toggleExpand() {
-    isExpanded = !isExpanded;
-  }
-</script>
-
-<div class="toc-item">
-  <button on:click={toggleExpand}>
-    {isExpanded ? '▾' : '▸'}
-  </button>
-</div>
-
-{#if isExpanded}
-  <div class="toc-sub-items">
-  </div>
-{/if}
--->
 
 <div class="toc-item">
   <fieldset>
@@ -71,19 +33,12 @@
       <input
         type="checkbox"
         checked={isVisible}
-        on:change={toggleVisibility}
+        onchange={toggleVisibility}
         disabled={layer.isLoading || layer.hasError}
-        id="toc-item-{layer.id}"
+        id="toc-item--{layer.id}"
       />
 
-      <label for="toc-item-{layer.id}">{layer.name}</label>
-
-      <!-- <button disabled={layer.zIndex === 0} on:click={down}>
-        {layer.zIndex} &DownArrow;
-      </button>
-      <button disabled={layer.zIndex === 0} on:click={up}>
-        {layer.zIndex} &UpArrow;
-      </button> -->
+      <label for="toc-item--{layer.id}">{layer.name}</label>
     </legend>
     <div>
       Opacity:
@@ -94,7 +49,7 @@
         max="1"
         step="0.05"
         bind:value={opacity}
-        on:input={handleOpacityChange}
+        oninput={handleOpacityChange}
       />
     </div>
     {#if layer.isLoading}
@@ -110,14 +65,15 @@
             aria-label="Open in Allmaps Viewer"><span class="allmaps"></span></a
           >
           &middot;
-          <a href={layer.settings.url} aria-label="IIIF manifest" target="_blank"
-            ><span class="iiif"></span></a
+          <a
+            href={layer.settings.url}
+            aria-label="IIIF manifest"
+            target="_blank"><span class="iiif"></span></a
           >
           &middot;
-          <button on:click={toggleExpand}>
+          <button onclick={toggleExpand}>
             {isExpanded ? "▾" : "▸"}
           </button>
-          
         {:else}
           {layer.settings.type}
         {/if}
@@ -125,14 +81,29 @@
 
       <div>
         {#if isExpanded}
-          {#each layer.iconImageUrls as src}
-            <img
-              {src}
-              loading="lazy"
-              width="128"
-              alt="Thumbnail for {src}"
-              class="rounded-border {isVisible ? '' : 'invisible'}"
-            />
+          {#each layer.iconImageUrls as icon, index}
+            <button
+              disabled={!isVisible}
+              onclick={() => {
+                const features = layer.olLayers[1].getSource().getFeatures();
+                const f =
+                  features.find(
+                    (feature) => feature.get("mapId") === icon.mapId,
+                  ) || null;
+                if (f != null) {
+                  const extent = f.getGeometry().getExtent();
+                  zoomToExtentFn(extent);
+                }
+              }}
+            >
+              <img
+                src={icon.src}
+                loading="lazy"
+                width="128"
+                alt="Thumbnail for {icon}"
+                class="rounded-border {isVisible ? '' : 'invisible'}"
+              />
+            </button>
           {/each}
         {/if}
       </div>
@@ -142,9 +113,9 @@
 
 <style>
   .invisible {
-    filter: grayscale(1)
+    filter: grayscale(1);
   }
-  
+
   .rounded-border {
     border-radius: 10px;
     border: 1px solid darkgray;
