@@ -131,7 +131,7 @@
               loading="lazy"
               width="128"
               alt="Thumbnail for {src}"
-              class="rounded-border"
+              class="rounded-border {isVisible ? '' : 'invisible'}"
             />
           {/each}
         {/if}
@@ -141,6 +141,10 @@
 </div>
 
 <style>
+  .invisible {
+    filter: grayscale(1)
+  }
+  
   .rounded-border {
     border-radius: 10px;
     border: 1px solid darkgray;

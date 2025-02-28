@@ -137,7 +137,7 @@ export async function initializeLayer(source) {
             // ;
             // return f;
         });
-        console.log(features);
+        // console.log(features);
 
         // Compose the feature collection
         let collection = {
