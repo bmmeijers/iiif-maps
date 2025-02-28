@@ -168,7 +168,7 @@
       },
       {
         type: "IIIF",
-        name: "Hoogtekaart van Nederland (W.C.H. Staring)",
+        name: "Hoogtekaart van Nederland (WCH Staring)",
         url: "./hoogtekaartStaringHR.json",
         isVisible: true,
       },
@@ -225,7 +225,7 @@
         type: "vector",
         name: "Graticule (🌐 Krayenhoff)",
         url: "graticule_geographic_krayenhoff.geojson",
-        isVisible: true,
+        isVisible: false,
       },
     ];
 
