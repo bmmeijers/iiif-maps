@@ -154,25 +154,70 @@
       },
       {
         type: "WMS",
-        name: "Luchtfoto (8cm)",
+        name: "Luchtfoto (Nederland, 8cm)",
         url: "https://service.pdok.nl/hwh/luchtfotorgb/wms/v1_0",
         params: { LAYERS: "Actueel_orthoHR", TILED: true },
         isVisible: false,
       },
       {
+        type: "WMS",
+        name: "Orthofotomozaïek (Vlaanderen)", // , grootschalig, winteropnamen, kleur, 2013-2015,
+        url: "https://geo.api.vlaanderen.be/ogw/wms",
+        params: { LAYERS: "OGWRGB13_15VL", TILED: true },
+        isVisible: false,
+      },
+
+      {
+        type: "WMTS",
+        name: "Digitale Orthophotos (North Rhein Westfalen)",
+        url: "https://www.wmts.nrw.de/geobasis/wmts_nw_dop/1.0.0/WMTSCapabilities.xml",
+        layerName: "nw_dop",
+        matrixSet: "EPSG_3857_16",
+        isVisible: false,
+      },
+
+      {
+        type: "WMS",
+        name: "Digitale Orthophotos (Niedersachsen)",
+        url: "https://opendata.lgln.niedersachsen.de/doorman/noauth/dop_wms",
+        params: { LAYERS: "ni_dop20", TILED: true },
+        isVisible: false,
+      },
+
+      // {
+      //   type: "WMS",
+      //   name: "Luftbildbefliegung 2003",
+      //   url: "https://mdi.niedersachsen.de/geoserver/LuftbildxTMAPx2003/wms",
+      //   params: { LAYERS: "LuftbildxTMAPx2003:MosaikxTMAPx2003", TILED: true },
+      //   isVisible: true,
+      // },
+
+      {
         type: "WMTS",
         name: "BRT Water",
         url: "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0?request=getcapabilities&service=wmts",
         layerName: "water",
+        matrixSet: "EPSG:3857",
         isVisible: false,
       },
       {
         type: "IIIF",
         name: "Hoogtekaart van Nederland (WCH Staring)",
         url: "./hoogtekaartStaringHR.json",
-        isVisible: true,
+        isVisible: false,
       },
-
+      {
+        type: "IIIF",
+        name: "Waterstaatkundige beschrijving van ons land",
+        url: "./waterstaatkundig.json",
+        isVisible: false,
+      }, // https://searchworks.stanford.edu/view/14174831
+      {
+        type: "IIIF",
+        name: "Nederland. Grondsoorten. (Bosatlas, 1890)",
+        url: "./bosatlas.json",
+        isVisible: false,
+      }, // https://objects.library.uu.nl/reader/viewer_sync.php?obj=1874-334289&pagenum=28&lan=nl&src=arrowedition
       {
         type: "IIIF",
         name: "Waterstaatskaart (editie 1 · nabewerkt, UU)",
@@ -187,14 +232,34 @@
       },
       {
         type: "IIIF",
-        name: "Waterstaatskaart (editie 2, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_2/latest.json",
+        name: "Waterstaatskaart (editie 1-BIS, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1bis/latest.json",
         isVisible: false,
       },
       {
         type: "IIIF",
+        name: "Waterstaatskaart (editie 2, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_2/latest.json",
+        isVisible: false,
+      },
+
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 2-BIS, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_2bis/latest.json",
+        isVisible: false,
+      },
+
+      {
+        type: "IIIF",
         name: "Waterstaatskaart (editie 3, UU)",
         url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_3/latest.json",
+        isVisible: false,
+      },
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 3-BIS, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_3bis/latest.json",
         isVisible: false,
       },
       {
@@ -205,25 +270,71 @@
       },
       {
         type: "IIIF",
+        name: "Waterstaatskaart (editie 4-BIS, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4bis/latest.json",
+        isVisible: false,
+      },
+      {
+        type: "IIIF",
         name: "Waterstaatskaart (editie 5, UU)",
         url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest.json",
         isVisible: false,
       },
+
       {
-        type: "vector",
-        name: "Bladindeling (1:50k, 🌐 Rijksdriehoekstelsel)",
-        url: "rdCannonicalSheetIndex.json",
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 1, Schiermonnikoog · Apart blad, georeferentie obv graticule)",
+        url: "./schier_ed1.json",
         isVisible: false,
       },
+
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart · Hydrologische WaarnemingsPunten (editie 5, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest_hwp.json",
+        isVisible: true,
+      },
+      
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart · WaterVoorzieningsEenheden (editie 5, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest_wve.json",
+        isVisible: false,
+      },
+
+
+      // {
+      //   type: "IIIF",
+      //   name: "Temporary",
+      //   url: "./_tmp.json",
+      //   isVisible: false,
+      // },
+
+
       {
         type: "vector",
-        name: "Bladindeling (TMK, 🌐 Bonne)",
+        name: "Standaard bladindeling (TMK, 🌐 Bonne)",
         url: "bonneCannonicalSheetIndex.json",
         isVisible: false,
       },
+
       {
         type: "vector",
-        name: "Graticule (🌐 Krayenhoff)",
+        name: "Standaard bladindeling (1:50k, 🌐 Rijksdriehoekstelsel)",
+        url: "rdCannonicalSheetIndex.json",
+        isVisible: false,
+      },
+
+      {
+        type: "vector",
+        name: "Graticule 5 × 5km · kruispunten (🌐 Rijksdriehoekstelsel)",
+        url: "graticule_rd_5x5km.geojson",
+        isVisible: true,
+      },
+
+      {
+        type: "vector",
+        name: "Graticule 5 × 5 · lijnen'  (🌐 Krayenhoff)",
         url: "graticule_geographic_krayenhoff.geojson",
         isVisible: false,
       },
@@ -233,6 +344,22 @@
     loadLayers(settingsLayers);
 
     // Initialize layers
+
+  //   if (sheetsWarpedMapLayer) {
+  //   sheetsWarpedMapLayer.setOpacity(opacity);
+  //   sheetsWarpedMapLayer.setSaturation(saturation);
+  //   sheetsWarpedMapLayer.setRemoveColor({
+  //     hexColor,
+  //     threshold,
+  //     hardness
+  //   });
+  //   if (colorize) {
+  //     sheetsWarpedMapLayer.setColorize(colorizeHexColor);
+  //   } else {
+  //     sheetsWarpedMapLayer.resetColorize();
+  //   }
+  // }
+
     layerList.forEach((setting) => {
       initializeLayer(setting).then((result) => {
         let initedLayers = result.layers;
