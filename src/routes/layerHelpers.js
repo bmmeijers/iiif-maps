@@ -19,11 +19,14 @@ export async function initializeLayer(source) {
 
     if (source.settings.type === "WMTS") {
         let capabilities = await fetch(source.settings.url);
+        
         const parser = new WMTSCapabilities();
         const parsed = parser.read(await capabilities.text());
+        console.info(parsed)
         const options = optionsFromCapabilities(parsed, {
             layer: source.settings.layerName,
-            matrixSet: 'EPSG:3857'
+            // matrixSet: 'EPSG:3857'
+            matrixSet: source.settings.matrixSet,
         });
         let olLayer = new TileLayer({
             opacity: 1,
@@ -51,7 +54,7 @@ export async function initializeLayer(source) {
             }),
             style: new Style({
                 image: new CircleStyle({
-                    radius: 5,
+                    radius: 1.5,
                     fill: new Fill({ color: 'rgba(255, 0, 0, 0.5)' }),
                     stroke: new Stroke({ color: 'red', width: 1 })
                 }),
@@ -112,7 +115,7 @@ export async function initializeLayer(source) {
         style: new Style({
             fill: null,
             stroke: new Stroke({
-                color: 'rgba(68, 15, 133, 0.65)',
+                color: 'rgba(255, 0, 221, 0.65)',
                 width: 0.5
             })
         })
