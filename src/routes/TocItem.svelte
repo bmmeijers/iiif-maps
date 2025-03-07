@@ -4,6 +4,35 @@
   let opacity = $state(1);
   let isExpanded = $state(false);
 
+  let bgLayerColor = $state("#FFF2E2");
+  let bgThreshold = $state(0);
+  let bgHardness = $state(0);
+
+  function handleBgColor() {
+    layer.olLayers[0].setRemoveColor({
+      hexColor: bgLayerColor,
+      threshold: bgThreshold,
+      hardness: bgHardness,
+    });
+  }
+
+  let colorize = $state(false);
+  let colorizeHexColor = $state("#FFF2E2");
+
+  let x = $derived.by((colorize) => {
+    if (!colorize) {
+      layer.olLayers[0].resetColorize();
+    }
+  });
+
+  function handleColorize() {
+    if (colorize) {
+      layer.olLayers[0].setColorize(colorizeHexColor);
+    } else {
+      layer.olLayers[0].resetColorize();
+    }
+  }
+
   function handleOpacityChange(event) {
     opacity = Number(event.target.value);
     if (layer.olLayers) {
@@ -40,71 +69,115 @@
 
       <label for="toc-item--{layer.id}">{layer.name}</label>
     </legend>
-    <div>
-      Opacity:
-      <input
-        disabled={layer.isLoading || layer.hasError}
-        type="range"
-        min="0"
-        max="1"
-        step="0.05"
-        bind:value={opacity}
-        oninput={handleOpacityChange}
-      />
-    </div>
+
     {#if layer.isLoading}
       <span class="loading-spinner">🔄</span>
     {:else if layer.hasError}
       <span class="error-indicator">❗</span>
     {:else}
-      <span>
-        {#if layer.settings.type == "IIIF"}
-          <a
-            href="//dev.viewer.allmaps.org/?url={layer.settings.url}"
-            target="_blank"
-            aria-label="Open in Allmaps Viewer"><span class="allmaps"></span></a
-          >
-          &middot;
-          <a
-            href={layer.settings.url}
-            aria-label="IIIF manifest"
-            target="_blank"><span class="iiif"></span></a
-          >
-          &middot;
-          <button onclick={toggleExpand}>
-            {isExpanded ? "▾" : "▸"}
-          </button>
-        {:else}
-          {layer.settings.type}
-        {/if}
-      </span>
+      {#if layer.settings.type == "IIIF"}
+        <a
+          href="//dev.viewer.allmaps.org/?url={layer.settings.url}"
+          target="_blank"
+          aria-label="Open in Allmaps Viewer"><span class="allmaps"></span></a
+        >
+        &middot;
+        <a href={layer.settings.url} aria-label="IIIF manifest" target="_blank"
+          ><span class="iiif"></span></a
+        >
+        &middot;
+        <button onclick={toggleExpand}>
+          {isExpanded ? "▾" : "▸"}
+        </button>
+      {:else}
+        {layer.settings.type}
+      {/if}
 
       <div>
         {#if isExpanded}
-          {#each layer.iconImageUrls as icon, index}
+          <fieldset>
+            <legend>Background removal</legend>
+            Color:
+            <input
+              type="color"
+              bind:value={bgLayerColor}
+              oninput={handleBgColor}
+            />
+            <br />
+
+            Threshold:
+            <input
+              disabled={layer.isLoading || layer.hasError}
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              bind:value={bgThreshold}
+              oninput={handleBgColor}
+            />
+            <br />
+            Hardness:
+            <input
+              disabled={layer.isLoading || layer.hasError}
+              type="range"
+              min="0"
+              max="1"
+              step="0.1"
+              bind:value={bgHardness}
+              oninput={handleBgColor}
+            />
+            <br />
             <button
-              disabled={!isVisible}
               onclick={() => {
-                const features = layer.olLayers[1].getSource().getFeatures();
-                const f =
-                  features.find(
-                    (feature) => feature.get("mapId") === icon.mapId,
-                  ) || null;
-                if (f != null) {
-                  const extent = f.getGeometry().getExtent();
-                  zoomToExtentFn(extent);
-                }
-              }}
+                // console.info(bgLayerColor);
+                handleBgColor();
+              }}>Color removal</button
             >
-              <img
-                src={icon.src}
-                loading="lazy"
-                width="128"
-                alt="Thumbnail for {icon}"
-                class="rounded-border {isVisible ? '' : 'invisible'}"
-              />
-            </button>
-          {/each}
+          </fieldset>
+
+          <fieldset>
+            <legend>Colorize</legend>
+            Color:
+            <input
+              type="color"
+              bind:value={colorizeHexColor}
+              oninput={handleColorize}
+            />
+            <br />
+            Bla:
+            <input
+              type="checkbox"
+              bind:checked={colorize}
+              oninput={handleColorize}
+            />
+          </fieldset>
+          <fieldset>
+            <legend>Icons</legend>
+            {#each layer.iconImageUrls as icon, index}
+              <button
+                disabled={!isVisible}
+                onclick={() => {
+                  const features = layer.olLayers[1].getSource().getFeatures();
+                  const f =
+                    features.find(
+                      (feature) => feature.get("mapId") === icon.mapId,
+                    ) || null;
+                  if (f != null) {
+                    const extent = f.getGeometry().getExtent();
+                    zoomToExtentFn(extent);
+                  }
+                }}
+              >
+                <img
+                  src={icon.src}
+                  loading="lazy"
+                  width="128"
+                  alt="Thumbnail for {icon}"
+                  class="rounded-border {isVisible ? '' : 'invisible'}"
+                />
+              </button>
+            {/each}
+          </fieldset>
         {/if}
       </div>
     {/if}
