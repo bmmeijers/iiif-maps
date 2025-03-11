@@ -91,10 +91,35 @@
         </button>
       {:else}
         {layer.settings.type}
+        <fieldset>
+          <legend> Opacity: </legend>
+          <input
+            disabled={layer.isLoading || layer.hasError}
+            type="range"
+            min="0"
+            max="1"
+            step="0.05"
+            bind:value={opacity}
+            oninput={handleOpacityChange}
+          />
+        </fieldset>
       {/if}
 
       <div>
         {#if isExpanded}
+          <fieldset>
+            <legend> Opacity: </legend>
+            <input
+              disabled={layer.isLoading || layer.hasError}
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              bind:value={opacity}
+              oninput={handleOpacityChange}
+            />
+          </fieldset>
+
           <fieldset>
             <legend>Background removal</legend>
             Color:
@@ -178,7 +203,7 @@
               </button>
             {/each}
           </fieldset>
-        {/if}
+        {:else}{/if}
       </div>
     {/if}
   </fieldset>

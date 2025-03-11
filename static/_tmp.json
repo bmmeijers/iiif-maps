@@ -1,0 +1,94 @@
+{
+    "id": "72f6e023-dfe1-4cff-8527-ffa8760c0827",
+    "type": "Annotation",
+    "@context": [
+      "http://iiif.io/api/extension/georef/1/context.json",
+      "http://iiif.io/api/presentation/3/context.json"
+    ],
+    "motivation": "georeferencing",
+    "target": {
+      "type": "SpecificResource",
+      "source": {
+        "id": "https://objects.library.uu.nl/fcgi-bin/iipsrv.fcgi?IIIF=/manifestation/viewer/12/78/48/127848576215223898926517442659981528411.jp2",
+        "type": "ImageService2",
+        "height": 6690,
+        "width": 8292
+      },
+      "selector": {
+        "type": "SvgSelector",
+        "value": "<svg width=\"8292\" height=\"6690\"><polygon points=\"284,6194 4999,6194 4987,301 271,303\" /></svg>"
+      }
+    },
+    "body": {
+      "type": "FeatureCollection",
+      "transformation": {
+        "type": "thinPlateSpline"
+      },
+      "features": [
+        {
+          "type": "Feature",
+          "properties": {
+            "resourceCoords": [
+              284,
+              6194
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              6.063489796409515,
+              53.38444193996943
+            ]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "resourceCoords": [
+              4999,
+              6194
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              6.364023818300292,
+              53.38237734746463
+            ]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "resourceCoords": [
+              4987,
+              301
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              6.369155204376248,
+              53.60696668393597
+            ]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "resourceCoords": [
+              271,
+              303
+            ]
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              6.067043684646149,
+              53.60904577208123
+            ]
+          }
+        }
+      ]
+    }
+  }

@@ -14,12 +14,14 @@ import Stroke from 'ol/style/Stroke.js';
 import CircleStyle from 'ol/style/Circle.js';
 import Fill from 'ol/style/Fill.js';
 
+import { XYZ } from 'ol/source.js'
+
 export async function initializeLayer(source) {
     let olLayer = null;
 
     if (source.settings.type === "WMTS") {
         let capabilities = await fetch(source.settings.url);
-        
+
         const parser = new WMTSCapabilities();
         const parsed = parser.read(await capabilities.text());
         console.info(parsed)
@@ -46,6 +48,16 @@ export async function initializeLayer(source) {
         return { 'layer': olLayer, 'layers': [olLayer] };
     }
 
+    else if (source.settings.type === "XYZ") {
+        let olLayer = new TileLayer({
+            source: new XYZ({
+                url: source.settings.url, 
+                tileSize: source.settings.tileSize || 256, // Optional: Set tile size (default is 256)
+            }),
+        });
+        return { 'layer': olLayer, 'layers': [olLayer] };
+    }
+
     else if (source.settings.type === "vector") {
         let layer = new VectorLayer({
             source: new VectorSource({
@@ -57,6 +69,9 @@ export async function initializeLayer(source) {
                     radius: 1.5,
                     fill: new Fill({ color: 'rgba(255, 0, 0, 0.5)' }),
                     stroke: new Stroke({ color: 'red', width: 1 })
+                }),
+                fill: new Fill({
+                    color: 'rgba(78, 205, 0, 0.24)', // Semi-transparent blue fill
                 }),
                 stroke: new Stroke({
                     color: 'darkgreen',
@@ -79,49 +94,51 @@ export async function initializeLayer(source) {
         for (const mapId of ids) {
             let mask = olLayer?.getWarpedMap(mapId)?.geoMask;
             let iconImageUrl = olLayer.getWarpedMap(mapId).georeferencedMap.resource.id + "/full/256,/0/default.jpg";
-            iconImageUrls.push({'mapId': mapId, 'src': iconImageUrl});
-        pairs.push([mapId, mask])
-    }
+            iconImageUrls.push({ 'mapId': mapId, 'src': iconImageUrl });
+            pairs.push([mapId, mask])
+        }
 
-    // Make a geojson layer of the masks
-    let features = pairs.map((pair) => {
-        let [mapId, mask] = pair;
-        return {
-            type: 'Feature',
-            geometry: mask,
-            properties: {
-                mapId: mapId
-            }
+        // Make a geojson layer of the masks
+        let features = pairs.map((pair) => {
+            let [mapId, mask] = pair;
+            return {
+                type: 'Feature',
+                geometry: mask,
+                properties: {
+                    mapId: mapId
+                }
+            };
+        });
+
+        // Compose the feature collection
+        let collection = {
+            type: 'FeatureCollection',
+            features: features
         };
-    });
 
-    // Compose the feature collection
-    let collection = {
-        type: 'FeatureCollection',
-        features: features
-    };
-
-    // Create a vector source from the GeoJSON data
-    const vectorSource = new VectorSource({
-        features: new GeoJSON().readFeatures(collection, {
-            dataProjection: 'EPSG:4326',
-            featureProjection: 'EPSG:3857'
-        })
-    });
-
-    // The GeoJSON vector layer
-    const vectorLayer = new VectorLayer({
-        source: vectorSource,
-        style: new Style({
-            fill: null,
-            stroke: new Stroke({
-                color: 'rgba(255, 0, 221, 0.65)',
-                width: 0.5
+        // Create a vector source from the GeoJSON data
+        const vectorSource = new VectorSource({
+            features: new GeoJSON().readFeatures(collection, {
+                dataProjection: 'EPSG:4326',
+                featureProjection: 'EPSG:3857'
             })
-        })
-    });
+        });
 
-    return { 'layer': olLayer, 'iconImageUrls': iconImageUrls, 'layers': [olLayer, vectorLayer] };
-}
+        // The GeoJSON vector layer
+        const vectorLayer = new VectorLayer({
+            source: vectorSource,
+            style: new Style({
+                fill: null,
+                stroke: new Stroke({
+                    color: 'rgba(255, 0, 221, 0.65)',
+                    width: 0.5
+                })
+            })
+        });
+
+        return { 'layer': olLayer, 'iconImageUrls': iconImageUrls, 'layers': [olLayer, vectorLayer] };
+    } else {
+        throw new Error('Undefined layer type')
+    }
 
 }
