@@ -208,21 +208,21 @@
         isVisible: true,
       },
 
-      {
-        type: "XYZ",
-        name: "HisGIS Minuutplans",
-        url: "https://hisgis.nl/wmts/minuutplans/cut/{z}/{x}/{y}.png",
-        isVisible: true,
-      },
+      // {
+      //   type: "XYZ",
+      //   name: "HisGIS Minuutplans",
+      //   url: "https://hisgis.nl/wmts/minuutplans/cut/{z}/{x}/{y}.png",
+      //   isVisible: true,
+      // },
 
-      {
-        type: "WMTS",
-        name: "Kadastrale Kaart",
-        url: "https://service.pdok.nl/kadaster/kadastralekaart/wmts/v5_0?request=GetCapabilities&service=WMTS",
-        layerName: "Kadastralekaart",
-        matrixSet: "EPSG:3857",
-        isVisible: true,
-      },
+      // {
+      //   type: "WMTS",
+      //   name: "Kadastrale Kaart",
+      //   url: "https://service.pdok.nl/kadaster/kadastralekaart/wmts/v5_0?request=GetCapabilities&service=WMTS",
+      //   layerName: "Kadastralekaart",
+      //   matrixSet: "EPSG:3857",
+      //   isVisible: true,
+      // },
 
       // {
       //   type: "IIIF",
@@ -256,8 +256,24 @@
       //   type: "IIIF",
       //   name: "Waterstaatskaart (editie 1, UU)",
       //   url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1/latest.json",
-      //   isVisible: false,
+      //   isVisible: true,
       // },
+
+      {
+        type: "IIIF",
+        name: "LOCAL Waterstaatskaart (editie 1, UU)",
+        url: "http://localhost:3001/repos/iiif-annotations/items/series/waterstaatskaart/uu/editie_1/latest.json",
+        isVisible: true,
+      },
+
+      {
+        type: "IIIF",
+        name: "LOCAL test-repo",
+        url: "http://localhost:3001/repos/test-repo/items/test.json",
+        isVisible: true,
+        
+      },
+
       // {
       //   type: "IIIF",
       //   name: "Waterstaatskaart (editie 1-BIS, UU)",
@@ -330,19 +346,19 @@
       //   isVisible: false,
       // },
 
-      {
-        type: "IIIF",
-        name: "Delft · MIN08034C",
-        url: "https://annotations.allmaps.org/images/3caf2fa7242b67d0",
-        isVisible: true,
-      },
+      // {
+      //   type: "IIIF",
+      //   name: "Delft · MIN08034C",
+      //   url: "https://annotations.allmaps.org/images/3caf2fa7242b67d0",
+      //   isVisible: true,
+      // },
 
-      {
-        type: "IIIF",
-        name: "Delft · MIN08034D / MIN08034E",
-        url: "https://annotations.allmaps.org/images/24efb897f58a4120",
-        isVisible: true,
-      },
+      // {
+      //   type: "IIIF",
+      //   name: "Delft · MIN08034D / MIN08034E",
+      //   url: "https://annotations.allmaps.org/images/24efb897f58a4120",
+      //   isVisible: true,
+      // },
       // Missing could be obtained from here:
       // https://www.nationaalarchief.nl/onderzoeken/archief/4.KADOR-G/invnr/84/file/NL-HaNA_4.KADOR-G_84_D01?eadID=4.KADOR-G&unitID=84&query=
 
@@ -353,26 +369,26 @@
       //   isVisible: false,
       // },
 
-      // {
-      //   type: "vector",
-      //   name: "Standaard bladindeling (TMK, 🌐 Bonne)",
-      //   url: "bonneCannonicalSheetIndex.json",
-      //   isVisible: false,
-      // },
+      {
+        type: "vector",
+        name: "Standaard bladindeling (TMK, 🌐 Bonne)",
+        url: "bonneCannonicalSheetIndex.json",
+        isVisible: false,
+      },
 
-      // {
-      //   type: "vector",
-      //   name: "Standaard bladindeling (1:50k, 🌐 Rijksdriehoekstelsel)",
-      //   url: "rdCannonicalSheetIndex.json",
-      //   isVisible: false,
-      // },
+      {
+        type: "vector",
+        name: "Standaard bladindeling (1:50k, 🌐 Rijksdriehoekstelsel)",
+        url: "rdCannonicalSheetIndex.json",
+        isVisible: false,
+      },
 
-      // {
-      //   type: "vector",
-      //   name: "Graticule 5 × 5km · kruispunten (🌐 Rijksdriehoekstelsel)",
-      //   url: "graticule_rd_5x5km.geojson",
-      //   isVisible: false,
-      // },
+      {
+        type: "vector",
+        name: "Graticule 5 × 5km · kruispunten (🌐 Rijksdriehoekstelsel)",
+        url: "graticule_rd_5x5km.geojson",
+        isVisible: false,
+      },
 
       {
         type: "vector",
@@ -381,12 +397,12 @@
         isVisible: false,
       },
 
-      {
-        type: "vector",
-        name: "Kadaster Minuutplans (🌐 WGS'84)",
-        url: "minuutplans_simpler.geojson",
-        isVisible: true,
-      },
+      // {
+      //   type: "vector",
+      //   name: "Kadaster Minuutplans (🌐 WGS'84)",
+      //   url: "minuutplans_simpler.geojson",
+      //   isVisible: true,
+      // },
     ];
 
     // modifies the layers store
@@ -437,6 +453,7 @@
 </script>
 
 <div class="container">
+  <!--
   <div id="feature-info" class="feature-info">
     {#if featureProperties}
       <h3>Feature Properties</h3>
@@ -467,7 +484,7 @@
       </table>
     {/if}
   </div>
-
+  -->
   <div id="map"></div>
   <div id="toc">
     <fieldset
@@ -486,7 +503,7 @@
 <style>
   .container {
     display: grid;
-    grid-template-columns: 2fr 70% 3fr;
+    grid-template-columns: 1.5fr 1fr;
     height: 100vh;
   }
 
