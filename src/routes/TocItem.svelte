@@ -108,7 +108,7 @@
       <div>
         {#if isExpanded}
           <fieldset>
-            <legend> Opacity: </legend>
+            <legend>Opacity:</legend>
             <input
               disabled={layer.isLoading || layer.hasError}
               type="range"
@@ -121,7 +121,7 @@
           </fieldset>
 
           <fieldset>
-            <legend>Background removal</legend>
+            <legend>Background removal:</legend>
             Color:
             <input
               type="color"
@@ -169,7 +169,7 @@
               oninput={handleColorize}
             />
             <br />
-            Bla:
+            Colorize?
             <input
               type="checkbox"
               bind:checked={colorize}
@@ -177,7 +177,7 @@
             />
           </fieldset>
           <fieldset>
-            <legend>Icons</legend>
+            <legend>Maps:</legend>
             {#each layer.iconImageUrls as icon, index}
               <button
                 disabled={!isVisible}
