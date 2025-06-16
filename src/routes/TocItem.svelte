@@ -187,6 +187,20 @@
                     features.find(
                       (feature) => feature.get("mapId") === icon.mapId,
                     ) || null;
+
+                  //// FIXME: ** not really working well at the moment
+                  // layer.olLayers[0].setMapResourceMask(
+                  //   icon.mapId,
+                  //   layer.olLayers[0].getWarpedMap(icon.mapId).resourceFullMask,
+                  // );
+                  layer.olLayers[0].bringMapsToFront([icon.mapId]);
+
+                  // console.error(layer.olLayers[0].renderer)
+
+                  // console.error(layer.olLayers[0].getWarpedMap(icon.mapId).resourceMask)
+                  // console.error(layer.olLayers[0].getWarpedMap(icon.mapId).resourceFullMask)
+
+                  // layer.olLayers[0].hideMaps([icon.mapId])
                   if (f != null) {
                     const extent = f.getGeometry().getExtent();
                     zoomToExtentFn(extent);
@@ -197,8 +211,9 @@
                   src={icon.src}
                   loading="lazy"
                   width="128"
-                  alt="Thumbnail for {icon}"
-                  class="rounded-border {isVisible ? '' : 'invisible'}"
+                  alt="Thumbnail for {icon.mapId}"
+                  title="Thumbnail for {icon.mapId}"
+                  class={isVisible ? "" : "invisible"}
                 />
               </button>
             {/each}

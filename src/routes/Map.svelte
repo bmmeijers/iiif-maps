@@ -252,78 +252,107 @@
       //   isVisible: false,
       // },
 
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 1, UU)",
+        // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1/latest.json",
+        url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/01-1874-389916-georef.json",
+        isVisible: true,
+      },
+
+      // Local
       // {
       //   type: "IIIF",
-      //   name: "Waterstaatskaart (editie 1, UU)",
-      //   url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1/latest.json",
+      //   name: "LOCAL Waterstaatskaart (editie 1, UU)",
+      //   url: "http://localhost:3001/repos/iiif-annotations/items/series/waterstaatskaart/uu/editie_1/latest.json",
       //   isVisible: true,
       // },
 
+      // {
+      //   type: "IIIF",
+      //   name: "LOCAL test-repo",
+      //   url: "http://localhost:3001/repos/test-repo/items/test.json",
+      //   isVisible: true,
+
+      // },
+
       {
         type: "IIIF",
-        name: "LOCAL Waterstaatskaart (editie 1, UU)",
-        url: "http://localhost:3001/repos/iiif-annotations/items/series/waterstaatskaart/uu/editie_1/latest.json",
-        isVisible: true,
+        name: "Waterstaatskaart (editie 1-BIS, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1bis/latest.json",
+        isVisible: false,
+      },
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 2, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_2/latest.json",
+        isVisible: false,
       },
 
       {
         type: "IIIF",
-        name: "LOCAL test-repo",
-        url: "http://localhost:3001/repos/test-repo/items/test.json",
-        isVisible: true,
-        
+        name: "Waterstaatskaart (editie 2-BIS, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_2bis/latest.json",
+        isVisible: false,
       },
 
-      // {
-      //   type: "IIIF",
-      //   name: "Waterstaatskaart (editie 1-BIS, UU)",
-      //   url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1bis/latest.json",
-      //   isVisible: false,
-      // },
-      // {
-      //   type: "IIIF",
-      //   name: "Waterstaatskaart (editie 2, UU)",
-      //   url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_2/latest.json",
-      //   isVisible: false,
-      // },
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 3, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_3/latest.json",
+        isVisible: false,
+      },
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 3-BIS, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_3bis/latest.json",
+        isVisible: false,
+      },
 
-      // {
-      //   type: "IIIF",
-      //   name: "Waterstaatskaart (editie 2-BIS, UU)",
-      //   url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_2bis/latest.json",
-      //   isVisible: false,
-      // },
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 4, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4/latest.json",
+        isVisible: false,
+      },
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 4 · HWP, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4/latest_hwp.json",
+        isVisible: false,
+      },
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 4 · WVE, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4/latest_wve.json",
+        isVisible: false,
+      },
 
-      // {
-      //   type: "IIIF",
-      //   name: "Waterstaatskaart (editie 3, UU)",
-      //   url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_3/latest.json",
-      //   isVisible: false,
-      // },
-      // {
-      //   type: "IIIF",
-      //   name: "Waterstaatskaart (editie 3-BIS, UU)",
-      //   url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_3bis/latest.json",
-      //   isVisible: false,
-      // },
-      // {
-      //   type: "IIIF",
-      //   name: "Waterstaatskaart (editie 4, UU)",
-      //   url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4/latest.json",
-      //   isVisible: false,
-      // },
-      // {
-      //   type: "IIIF",
-      //   name: "Waterstaatskaart (editie 4-BIS, UU)",
-      //   url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4bis/latest.json",
-      //   isVisible: false,
-      // },
-      // {
-      //   type: "IIIF",
-      //   name: "Waterstaatskaart (editie 5, UU)",
-      //   url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest.json",
-      //   isVisible: false,
-      // },
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 4-BIS, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4bis/latest.json",
+        isVisible: false,
+      },
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 4-BIS · WVE, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4bis/latest_wve.json",
+        isVisible: false,
+      },
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 4-BIS · HWP, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4bis/latest_hwp.json",
+        isVisible: false,
+      },
+
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 5, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest.json",
+        isVisible: false,
+      },
 
       // {
       //   type: "IIIF",
@@ -332,19 +361,19 @@
       //   isVisible: false,
       // },
 
-      // {
-      //   type: "IIIF",
-      //   name: "Waterstaatskaart · Hydrologische WaarnemingsPunten (editie 5, UU)",
-      //   url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest_hwp.json",
-      //   isVisible: false,
-      // },
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 5 · HWP, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest_hwp.json",
+        isVisible: false,
+      },
 
-      // {
-      //   type: "IIIF",
-      //   name: "Waterstaatskaart · WaterVoorzieningsEenheden (editie 5, UU)",
-      //   url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest_wve.json",
-      //   isVisible: false,
-      // },
+      {
+        type: "IIIF",
+        name: "Waterstaatskaart (editie 5 · WVE, UU)",
+        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest_wve.json",
+        isVisible: false,
+      },
 
       // {
       //   type: "IIIF",
@@ -448,8 +477,21 @@
         (feature) => feature,
       );
       selectedFeature = feature || null;
+      console.info(selectedFeature);
     });
   });
+
+  let isExpanded = false;
+
+  function toggleContent() {
+    isExpanded = !isExpanded;
+    const menu = document.getElementById("menu");
+    if (isExpanded) {
+      menu.classList.add("expanded");
+    } else {
+      menu.classList.remove("expanded");
+    }
+  }
 </script>
 
 <div class="container">
@@ -486,27 +528,39 @@
   </div>
   -->
   <div id="map"></div>
-  <div id="toc">
-    <fieldset
-      style="margin:8px; padding:8px; font-family: sans-serif; font-size: smaller;"
-    >
-      <div id="mouse-position"></div>
-    </fieldset>
-    <TocPanel
-      zoomToExtentFn={(extent) => {
-        map.getView().fit(extent, { duration: 1000 });
-      }}
-    ></TocPanel>
+
+  <div class="menu" id="menu">
+    <div class="header">
+      <div class="head-left">
+        Waterstaatskaart van Nederland · 1865 &ndash; 1988
+      </div>
+      <div class="head-right">
+        <button onclick={toggleContent}>Toggle</button>
+      </div>
+    </div>
+    <div class="content-wrapper">
+      <div class="content">
+        <fieldset style="margin:8px; padding:8px; font-size: smaller;">
+          <div id="mouse-position"></div>
+        </fieldset>
+        <TocPanel
+          zoomToExtentFn={(extent) => {
+            map
+              .getView()
+              .fit(extent, { duration: 1200, padding: [50, 50, 50, 50] });
+          }}
+        ></TocPanel>
+      </div>
+    </div>
   </div>
 </div>
 
 <style>
-  .container {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    height: 100vh;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-
   #map {
     margin: 0;
     padding: 0;
@@ -515,7 +569,62 @@
     border: 1px solid black;
     /* Map styling */
   }
-  #toc {
-    overflow-y: scroll;
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    position: fixed;
+    bottom: 0;
+    right: 1%;
+    transition: transform 0.3s ease-in-out;
+    max-height: 80%;
+    border-radius: 5px 4px 0 0;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .menu {
+    width: 50%;
+    /*Default for large screens*/
+    max-width: 700px; /*   Limit the width*/
+  }
+
+  @media only screen and (max-width: 768px) {
+    .menu {
+      /*For screens smaller than 768px*/
+      max-height: 40%;
+      width: 90%;
+    }
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f8f9fa;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px 4px 0 0;
+    border: 1px solid #ccc;
+    background-color: lightgoldenrodyellow;
+  }
+
+  .content-wrapper {
+    display: none;
+    flex-direction: column;
+    background-color: white;
+    overflow: hidden;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+  }
+
+  :global(.menu.expanded .content-wrapper) {
+    display: flex;
+  }
+
+  .content {
+    padding: 20px;
+    flex: 1;
+    overflow: auto;
   }
 </style>
