@@ -3,6 +3,7 @@
   let isVisible = $state(layer.isVisible);
   let opacity = $state(1);
   let isExpanded = $state(false);
+  let isMapsExpanded = $state(false);
 
   let bgLayerColor = $state("#FFF2E2");
   let bgThreshold = $state(0);
@@ -43,10 +44,13 @@
   function toggleExpand() {
     isExpanded = !isExpanded;
   }
+  function toggleMapsExpand() {
+    isMapsExpanded = !isMapsExpanded;
+  }
 
   function toggleVisibility() {
     isVisible = !isVisible;
-    console.log("Toggle visibility : " + isVisible);
+    // console.log("Toggle visibility : " + isVisible);
     layer.isVisible = isVisible;
     if (layer.olLayers.length > 0) {
       layer.olLayers.forEach((element) => {
@@ -177,46 +181,71 @@
             />
           </fieldset>
           <fieldset>
-            <legend>Maps:</legend>
-            {#each layer.iconImageUrls as icon, index}
-              <button
-                disabled={!isVisible}
-                onclick={() => {
-                  const features = layer.olLayers[1].getSource().getFeatures();
-                  const f =
-                    features.find(
-                      (feature) => feature.get("mapId") === icon.mapId,
-                    ) || null;
+            <legend
+              >Maps:
+              <button onclick={toggleMapsExpand}>
+                {isMapsExpanded ? "▾" : "▸"}
+              </button></legend
+            >
+            {#if isMapsExpanded}
+              {#each layer.iconImageUrls as icon, index}
+                <button
+                  style="margin:6px;"
+                  disabled={!isVisible}
+                  onclick={() => {
+                    const features = layer.olLayers[1]
+                      .getSource()
+                      .getFeatures();
+                    const f =
+                      features.find(
+                        (feature) => feature.get("mapId") === icon.mapId,
+                      ) || null;
 
-                  //// FIXME: ** not really working well at the moment
-                  // layer.olLayers[0].setMapResourceMask(
-                  //   icon.mapId,
-                  //   layer.olLayers[0].getWarpedMap(icon.mapId).resourceFullMask,
-                  // );
-                  layer.olLayers[0].bringMapsToFront([icon.mapId]);
+                    //// FIXME: ** not really working well at the moment
+                    // layer.olLayers[0].setMapResourceMask(
+                    //   icon.mapId,
+                    //   layer.olLayers[0].getWarpedMap(icon.mapId).resourceFullMask,
+                    // );
 
-                  // console.error(layer.olLayers[0].renderer)
+                    layer.olLayers[0].bringMapsToFront([icon.mapId]);
+                    // layer.olLayers[0].contextLost(new Event("fake"));
+                    // layer.olLayers[0].contextRestored(new Event("fake"));
 
-                  // console.error(layer.olLayers[0].getWarpedMap(icon.mapId).resourceMask)
-                  // console.error(layer.olLayers[0].getWarpedMap(icon.mapId).resourceFullMask)
+                    // layer.olLayers[0].hideMap(icon.mapId);
+                    // layer.olLayers[0].showMap(icon.mapId);
 
-                  // layer.olLayers[0].hideMaps([icon.mapId])
-                  if (f != null) {
-                    const extent = f.getGeometry().getExtent();
-                    zoomToExtentFn(extent);
-                  }
-                }}
-              >
-                <img
-                  src={icon.src}
-                  loading="lazy"
-                  width="128"
-                  alt="Thumbnail for {icon.mapId}"
-                  title="Thumbnail for {icon.mapId}"
-                  class={isVisible ? "" : "invisible"}
-                />
-              </button>
-            {/each}
+                    // layer.olLayers[0].renderer.clear();
+                    // layer.olLayers[0].render();
+
+                    layer.olLayers[0].changed();
+
+                    // setTimeout(layer.olLayers[0].render, 400);
+
+                    // console.error(layer.olLayers[0].renderer)
+
+                    // console.error(layer.olLayers[0].getWarpedMap(icon.mapId).resourceMask)
+                    // console.error(layer.olLayers[0].getWarpedMap(icon.mapId).resourceFullMask)
+
+                    // layer.olLayers[0].hideMaps([icon.mapId])
+                    if (f != null) {
+                      const extent = f.getGeometry().getExtent();
+                      zoomToExtentFn(extent);
+                    }
+                  }}
+                >
+                  <img
+                    src={icon.src}
+                    loading="lazy"
+                    width="64"
+                    alt="Thumbnail for {icon.mapId}"
+                    title="Thumbnail for {icon.mapId}"
+                    class="rounded-border {isVisible ? '' : 'invisible'}"
+                  />
+                </button>
+              {/each}
+            {:else}
+              ⋯
+            {/if}
           </fieldset>
         {:else}{/if}
       </div>

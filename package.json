@@ -18,7 +18,7 @@
 	},
 	"dependencies": {
 		"@allmaps/openlayers": "^1.0.0-beta.73",
-		"ol": "^10.4.0",
-		"proj4": "^2.15.0"
+		"ol": "^10.6.0",
+		"proj4": "^2.17.0"
 	}
 }

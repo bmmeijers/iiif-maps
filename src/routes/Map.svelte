@@ -150,8 +150,14 @@
     // Load layers from settings file
     const settingsLayers = [
       {
+        type: "OSM",
+        name: "OpenStreetMap",
+        isVisible: false,
+      },
+
+      {
         type: "WMS",
-        name: "AHN",
+        name: "Actueel Hoogtebestand Nederland (DSM 5m)",
         url: "https://service.pdok.nl/rws/ahn/wms/v1_0",
         // layerName: "dtm_05m",
         params: { LAYERS: "dsm_05m", TILED: true },
@@ -190,14 +196,14 @@
       //   isVisible: false,
       // },
 
-      // {
-      //   type: "WMTS",
-      //   name: "BRT Water",
-      //   url: "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0?request=getcapabilities&service=wmts",
-      //   layerName: "water",
-      //   matrixSet: "EPSG:3857",
-      //   isVisible: false,
-      // },
+      {
+        type: "WMTS",
+        name: "BRT Water",
+        url: "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0?request=getcapabilities&service=wmts",
+        layerName: "water",
+        matrixSet: "EPSG:3857",
+        isVisible: false,
+      },
 
       {
         type: "WMTS",
@@ -205,7 +211,7 @@
         url: "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0?request=getcapabilities&service=wmts",
         layerName: "grijs",
         matrixSet: "EPSG:3857",
-        isVisible: true,
+        isVisible: false,
       },
 
       // {
@@ -531,18 +537,18 @@
 
   <div class="menu" id="menu">
     <div class="header">
-      <div class="head-left">
-        Waterstaatskaart van Nederland · 1865 &ndash; 1988
-      </div>
-      <div class="head-right">
-        <button onclick={toggleContent}>Toggle</button>
-      </div>
+      <img
+        src="favicon.svg"
+        width="20"
+        height="20"
+        alt="IIIF Maps"
+        title="IIIF Maps"
+      />
+      Waterstaatskaart van Nederland · 1865 &ndash; 1988
+      <button onclick={toggleContent}> Menu </button>
     </div>
     <div class="content-wrapper">
       <div class="content">
-        <fieldset style="margin:8px; padding:8px; font-size: smaller;">
-          <div id="mouse-position"></div>
-        </fieldset>
         <TocPanel
           zoomToExtentFn={(extent) => {
             map
@@ -550,6 +556,10 @@
               .fit(extent, { duration: 1200, padding: [50, 50, 50, 50] });
           }}
         ></TocPanel>
+
+        <fieldset style="margin:8px; padding:8px; font-size: smaller;">
+          <div id="mouse-position"></div>
+        </fieldset>
       </div>
     </div>
   </div>

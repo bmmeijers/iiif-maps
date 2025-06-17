@@ -16,6 +16,8 @@ import Fill from 'ol/style/Fill.js';
 
 import { XYZ } from 'ol/source.js'
 
+import OSM from 'ol/source/OSM.js';
+
 export async function initializeLayer(source) {
     let olLayer = null;
 
@@ -54,6 +56,13 @@ export async function initializeLayer(source) {
                 url: source.settings.url, 
                 tileSize: source.settings.tileSize || 256, // Optional: Set tile size (default is 256)
             }),
+        });
+        return { 'layer': olLayer, 'layers': [olLayer] };
+    }
+
+    else if (source.settings.type === "OSM") {
+        let olLayer = new TileLayer({
+            source: new OSM(),
         });
         return { 'layer': olLayer, 'layers': [olLayer] };
     }
