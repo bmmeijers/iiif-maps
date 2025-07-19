@@ -75,7 +75,7 @@
 
         // Create a transformer instance
         // transformer = proj4(sourceCRS, destinationCRS);
-        console.info("Inited Dutch coordinate transformations");
+        // console.info("Inited Dutch coordinate transformations");
         register(proj4);
 
         const mercator2rd = getTransform("EPSG:3857", "EPSG:28992");
@@ -108,17 +108,16 @@
           // const etrs = getTransform("EPSG:3857", "EPSG:4528")(coordinate)
 
           document.getElementById("mouse-position").innerHTML = `<table>
-                    <tr><th>Proj</th> <th>X</th> <th>Y</th></tr>
-                    <tr><td>Webmercator</td> <td>${x} </td> <td>${y}</td></tr>
-                    <tr><td>ETRS89</td> <td>${etrs[0].toFixed(6)} </td> <td>${etrs[1].toFixed(6)}</td></tr>
-                    <tr><td>ETRS89</td> <td colspan="2">${await formatCoordinates(etrs)}</td></tr>
-                    <tr><td>RD Nieuw</td> <td>${rd[0].toFixed(3)}</td> <td>${rd[1].toFixed(3)}</td></tr>
-                    <tr><td>RD Nieuw (7 params)</td> <td>${rd7params[0].toFixed(3)}</td> <td>${rd7params[1].toFixed(3)}</td></tr>
-                    <tr><td>RD Oud</td> <td>${(rd7params[0] - 155000).toFixed(0)}</td> <td>${(rd7params[1] - 463000).toFixed(0)}</td></tr>
-                    <tr><td>Bonne</td> <td>${bonne[0].toFixed(0)}</td> <td>${bonne[1].toFixed(0)}</td></tr>
-                    <tr><td>Krayenhoff</td> <td colspan="2">${await formatCoordinates(krayenhoff)}</td></tr>
-                    </table>
-                     `;
+<tr><th>Proj</th> <th>X</th> <th>Y</th></tr>
+<tr><td>Webmercator</td> <td>${x} </td> <td>${y}</td></tr>
+<tr><td>ETRS89</td> <td>${etrs[0].toFixed(6)} </td> <td>${etrs[1].toFixed(6)}</td></tr>
+<tr><td>ETRS89</td> <td colspan="2">${await formatCoordinates(etrs)}</td></tr>
+<tr><td>RD Nieuw</td> <td>${rd[0].toFixed(3)}</td> <td>${rd[1].toFixed(3)}</td></tr>
+<tr><td>RD Nieuw (7 params)</td> <td>${rd7params[0].toFixed(3)}</td> <td>${rd7params[1].toFixed(3)}</td></tr>
+<tr><td>RD Oud</td> <td>${(rd7params[0] - 155000).toFixed(0)}</td> <td>${(rd7params[1] - 463000).toFixed(0)}</td></tr>
+<tr><td>Bonne</td> <td>${bonne[0].toFixed(0)}</td> <td>${bonne[1].toFixed(0)}</td></tr>
+<tr><td>Krayenhoff</td> <td colspan="2">${await formatCoordinates(krayenhoff)}</td></tr>
+</table>`;
           // }
         });
       })
@@ -129,8 +128,8 @@
 
   onMount(async () => {
     let view = new View({
-      zoom: 8,
-      center: fromLonLat([5.1335, 52.14]),
+      zoom: 7,
+      center: fromLonLat([5.474, 52.15]),
     });
     // 	map = new Map({
     // 		controls: defaultControls().extend([scaleControl()]),
@@ -155,14 +154,22 @@
         isVisible: false,
       },
 
-      {
-        type: "WMS",
-        name: "Actueel Hoogtebestand Nederland (DSM 5m)",
-        url: "https://service.pdok.nl/rws/ahn/wms/v1_0",
-        // layerName: "dtm_05m",
-        params: { LAYERS: "dsm_05m", TILED: true },
-        isVisible: false,
-      },
+      // {
+      //   type: "XYZ",
+      //   name: "HisGIS AHN3 Hillshade",
+      //   url: "https://hisgis.nl/ahn3_nl/{z}/{x}/{y}.jpg",
+      //   isVisible: false,
+      // },
+
+      // {
+      //   type: "WMS",
+      //   name: "Actueel Hoogtebestand Nederland (DSM 5m)",
+      //   url: "https://service.pdok.nl/rws/ahn/wms/v1_0",
+      //   // layerName: "dtm_05m",
+      //   params: { LAYERS: "dsm_05m", TILED: true },
+      //   isVisible: false,
+      // },
+
       {
         type: "WMS",
         name: "Luchtfoto (Nederland, 8cm)",
@@ -196,14 +203,14 @@
       //   isVisible: false,
       // },
 
-      {
-        type: "WMTS",
-        name: "BRT Water",
-        url: "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0?request=getcapabilities&service=wmts",
-        layerName: "water",
-        matrixSet: "EPSG:3857",
-        isVisible: false,
-      },
+      // {
+      //   type: "WMTS",
+      //   name: "BRT Water",
+      //   url: "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0?request=getcapabilities&service=wmts",
+      //   layerName: "water",
+      //   matrixSet: "EPSG:3857",
+      //   isVisible: false,
+      // },
 
       {
         type: "WMTS",
@@ -258,128 +265,364 @@
       //   isVisible: false,
       // },
 
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 1, UU)",
-        // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1/latest.json",
-        url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/01-1874-389916-georef.json",
-        isVisible: true,
-      },
-
-      // Local
       // {
       //   type: "IIIF",
-      //   name: "LOCAL Waterstaatskaart (editie 1, UU)",
-      //   url: "http://localhost:3001/repos/iiif-annotations/items/series/waterstaatskaart/uu/editie_1/latest.json",
-      //   isVisible: true,
-      // },
-
-      // {
-      //   type: "IIIF",
-      //   name: "LOCAL test-repo",
-      //   url: "http://localhost:3001/repos/test-repo/items/test.json",
-      //   isVisible: true,
-
-      // },
-
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 1-BIS, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1bis/latest.json",
-        isVisible: false,
-      },
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 2, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_2/latest.json",
-        isVisible: false,
-      },
-
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 2-BIS, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_2bis/latest.json",
-        isVisible: false,
-      },
-
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 3, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_3/latest.json",
-        isVisible: false,
-      },
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 3-BIS, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_3bis/latest.json",
-        isVisible: false,
-      },
-
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 4, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4/latest.json",
-        isVisible: false,
-      },
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 4 · HWP, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4/latest_hwp.json",
-        isVisible: false,
-      },
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 4 · WVE, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4/latest_wve.json",
-        isVisible: false,
-      },
-
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 4-BIS, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4bis/latest.json",
-        isVisible: false,
-      },
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 4-BIS · WVE, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4bis/latest_wve.json",
-        isVisible: false,
-      },
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 4-BIS · HWP, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4bis/latest_hwp.json",
-        isVisible: false,
-      },
-
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 5, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest.json",
-        isVisible: false,
-      },
-
-      // {
-      //   type: "IIIF",
-      //   name: "Waterstaatskaart (editie 1, Schiermonnikoog · Apart blad, georeferentie obv graticule)",
-      //   url: "./schier_ed1.json",
+      //   name: "Topografisch Militaire Kaart (facsimile)",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1/latest.json",
+      //   url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/main/series/tmk/20231124.json",
       //   isVisible: false,
       // },
 
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 5 · HWP, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest_hwp.json",
-        isVisible: false,
-      },
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/01-1874-389916-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/02-1874-456650-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/03-1874-455650-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/04-1874-456550-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/05-1874-456551-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/06-1874-456552-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/07-1874-456588-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/07-1874-456588-hwp-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/07-1874-456588-wve-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/08-1874-456553-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/08-1874-456553-hwp-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/08-1874-456553-wve-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/09-1874-456827-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/09-1874-456827-hwp-georef.json",
+      // // url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/09-1874-456827-wve-georef.json",
 
-      {
-        type: "IIIF",
-        name: "Waterstaatskaart (editie 5 · WVE, UU)",
-        url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest_wve.json",
-        isVisible: false,
-      },
+      // {
+      //   type: "IIIF",
+      //   name: "Natte plekkenkaart, rood-blauw (Von Frijtag Drabbe)",
+      //   url: "https://sammeltassen.nl/iiif-manifests/allmaps/natte-plekkenkaart.json",
+      //   //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1/latest.json",
+      //   // url: "http://localhost:3001/repos/test-repo/items/natte-plekken.json",
+      //   //   // seeAlso: https://historischwaterbeheer.wur.nl/
+      //   isVisible: false,
+      // },
+
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 1, UU)",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1/latest.json",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/01-1874-389916-georef.json",
+      //   isVisible: false,
+      // },
+
+      // // Local
+      // // {
+      // //   type: "IIIF",
+      // //   name: "LOCAL Waterstaatskaart (editie 1, UU)",
+      // //   url: "http://localhost:3001/repos/iiif-annotations/items/series/waterstaatskaart/uu/editie_1/latest.json",
+      // //   isVisible: true,
+      // // },
+
+      // // {
+      // //   type: "IIIF",
+      // //   name: "LOCAL test-repo",
+      // //   url: "http://localhost:3001/repos/test-repo/items/test.json",
+      // //   isVisible: true,
+
+      // // },
+
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 1-BIS, UU)",
+      //   //url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_1bis/latest.json",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/02-1874-456650-georef.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 2, UU)",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_2/latest.json",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/03-1874-455650-georef.json",
+      //   isVisible: false,
+      // },
+
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 2-BIS, UU)",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/04-1874-456550-georef.json",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_2bis/latest.json",
+      //   isVisible: false,
+      // },
+
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 3, UU)",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/05-1874-456551-georef.json",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_3/latest.json",
+      //   isVisible: true,
+      // },
+
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 3-BIS, UU)",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/06-1874-456552-georef.json",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_3bis/latest.json",
+      //   isVisible: false,
+      // },
+
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 4, UU)",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/07-1874-456588-georef.json",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4/latest.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 4 · HWP, UU)",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/07-1874-456588-hwp-georef.json",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4/latest_hwp.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 4 · WVE, UU)",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/07-1874-456588-wve-georef.json",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4/latest_wve.json",
+      //   isVisible: false,
+      // },
+
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 4-BIS, UU)",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/08-1874-456553-georef.json",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4bis/latest.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 4-BIS · WVE, UU)",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/08-1874-456553-wve-georef.json",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4bis/latest_wve.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 4-BIS · HWP, UU)",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_4bis/latest_hwp.json",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/08-1874-456553-hwp-georef.json",
+      //   isVisible: false,
+      // },
+
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 5, UU)",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/09-1874-456827-georef.json",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest.json",
+      //   isVisible: false,
+      // },
+
+      // // {
+      // //   type: "IIIF",
+      // //   name: "Waterstaatskaart (editie 1, Schiermonnikoog · Apart blad, georeferentie obv graticule)",
+      // //   url: "./schier_ed1.json",
+      // //   isVisible: false,
+      // // },
+
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 5 · HWP, UU)",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/09-1874-456827-hwp-georef.json",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest_hwp.json",
+      //   isVisible: false,
+      // },
+
+      // {
+      //   type: "IIIF",
+      //   name: "Waterstaatskaart (editie 5 · WVE, UU)",
+      //   url: "https://raw.githubusercontent.com/tu-delft-heritage/watertijdreis-data/refs/heads/main/content/annotations/09-1874-456827-wve-georef.json",
+      //   // url: "https://raw.githubusercontent.com/bmmeijers/iiif-annotations/refs/heads/develop/series/waterstaatskaart/uu/editie_5/latest_wve.json",
+      //   isVisible: false,
+      // },
+
+      // {
+      //   type: "IIIF",
+      //   name: "Rivierkaart (1e druk, serie 1)",
+      //   url: "https://raw.githubusercontent.com/bmmeijers/river-maps-iiif-scripts/refs/heads/main/Output/georef/georef_EERSTE_DRUK_1.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Rivierkaart (1e druk, serie 2)",
+      //   url: "https://raw.githubusercontent.com/bmmeijers/river-maps-iiif-scripts/refs/heads/main/Output/georef/georef_EERSTE_DRUK_2.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Rivierkaart (1e druk, serie 3)",
+      //   url: "https://raw.githubusercontent.com/bmmeijers/river-maps-iiif-scripts/refs/heads/main/Output/georef/georef_EERSTE_DRUK_3.json",
+      //   isVisible: false,
+      // },
+
+      // {
+      //   type: "IIIF",
+      //   name: "Rivierkaart (2e herziening, serie 3)",
+      //   url: "https://raw.githubusercontent.com/bmmeijers/river-maps-iiif-scripts/refs/heads/main/Output/georef/georef_TWEEDE_HERZIENING_3.json",
+      //   isVisible: false,
+      // },
+
+
+      // build
+{
+  type: "IIIF",
+  name: "Bonne - 1",
+  url: "https://gist.bk.tudelft.nl/~bmmeijers/volatile/2025/bonne/bonne-1-mapedge-approximate.json",
+  isVisible: true,
+},
+{
+  type: "IIIF",
+  name: "Bonne - 2",
+  url: "https://gist.bk.tudelft.nl/~bmmeijers/volatile/2025/bonne/bonne-2-mapedge-corrected.json",
+  isVisible: false,
+},
+{
+  type: "IIIF",
+  name: "Bonne - 3",
+  url: "https://gist.bk.tudelft.nl/~bmmeijers/volatile/2025/bonne/bonne-3-mapedge-corrected.json",
+  isVisible: false,
+},
+{
+  type: "IIIF",
+  name: "Bonne - 4",
+  url: "https://gist.bk.tudelft.nl/~bmmeijers/volatile/2025/bonne/bonne-4-mapedge-corrected.json",
+  isVisible: false,
+},
+{
+  type: "IIIF",
+  name: "Bonne - 5",
+  url: "https://gist.bk.tudelft.nl/~bmmeijers/volatile/2025/bonne/bonne-5-mapedge-corrected.json",
+  isVisible: false,
+},
+{
+  type: "IIIF",
+  name: "Bonne - 6",
+  url: "https://gist.bk.tudelft.nl/~bmmeijers/volatile/2025/bonne/bonne-6-mapedge-corrected.json",
+  isVisible: false,
+},
+{
+  type: "IIIF",
+  name: "Bonne - 7",
+  url: "https://gist.bk.tudelft.nl/~bmmeijers/volatile/2025/bonne/bonne-7-mapedge-corrected.json",
+  isVisible: false,
+},
+{
+  type: "IIIF",
+  name: "Bonne - 8",
+  url: "https://gist.bk.tudelft.nl/~bmmeijers/volatile/2025/bonne/bonne-8-mapedge-corrected.json",
+  isVisible: false,
+},
+{
+  type: "IIIF",
+  name: "Bonne - 9",
+  url: "https://gist.bk.tudelft.nl/~bmmeijers/volatile/2025/bonne/bonne-9-mapedge-corrected.json",
+  isVisible: false,
+},
+{
+  type: "IIIF",
+  name: "Bonne - 10",
+  url: "https://gist.bk.tudelft.nl/~bmmeijers/volatile/2025/bonne/bonne-10-mapedge-corrected.json",
+  isVisible: false,
+},
+{
+  type: "IIIF",
+  name: "Bonne - 11",
+  url: "https://gist.bk.tudelft.nl/~bmmeijers/volatile/2025/bonne/bonne-11-mapedge-corrected.json",
+  isVisible: false,
+},
+{
+  type: "IIIF",
+  name: "Bonne - 12",
+  url: "https://gist.bk.tudelft.nl/~bmmeijers/volatile/2025/bonne/bonne-12-mapedge-corrected.json",
+  isVisible: false,
+},
+{
+  type: "IIIF",
+  name: "Bonne - 13",
+  url: "https://gist.bk.tudelft.nl/~bmmeijers/volatile/2025/bonne/bonne-13-mapedge-corrected.json",
+  isVisible: false,
+},
+
+      // /* local */
+      // {
+      //   type: "IIIF",
+      //   name: "Bonne - 1",
+      //   url: "http://localhost:3001/repos/test-repo/items/bonne-1-mapedge-approximate.json",
+      //   isVisible: true,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Bonne - 2",
+      //   url: "http://localhost:3001/repos/test-repo/items/bonne-2-mapedge-corrected.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Bonne - 3",
+      //   url: "http://localhost:3001/repos/test-repo/items/bonne-3-mapedge-corrected.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Bonne - 4",
+      //   url: "http://localhost:3001/repos/test-repo/items/bonne-4-mapedge-corrected.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Bonne - 5",
+      //   url: "http://localhost:3001/repos/test-repo/items/bonne-5-mapedge-corrected.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Bonne - 6",
+      //   url: "http://localhost:3001/repos/test-repo/items/bonne-6-mapedge-corrected.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Bonne - 7",
+      //   url: "http://localhost:3001/repos/test-repo/items/bonne-7-mapedge-corrected.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Bonne - 8",
+      //   url: "http://localhost:3001/repos/test-repo/items/bonne-8-mapedge-corrected.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Bonne - 9",
+      //   url: "http://localhost:3001/repos/test-repo/items/bonne-9-mapedge-corrected.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Bonne - 10",
+      //   url: "http://localhost:3001/repos/test-repo/items/bonne-10-mapedge-corrected.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Bonne - 11",
+      //   url: "http://localhost:3001/repos/test-repo/items/bonne-11-mapedge-corrected.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Bonne - 12",
+      //   url: "http://localhost:3001/repos/test-repo/items/bonne-12-mapedge-corrected.json",
+      //   isVisible: false,
+      // },
+      // {
+      //   type: "IIIF",
+      //   name: "Bonne - 13",
+      //   url: "http://localhost:3001/repos/test-repo/items/bonne-13-mapedge-corrected.json",
+      //   isVisible: false,
+      // },
 
       // {
       //   type: "IIIF",
@@ -415,6 +658,20 @@
         type: "vector",
         name: "Standaard bladindeling (1:50k, 🌐 Rijksdriehoekstelsel)",
         url: "rdCannonicalSheetIndex.json",
+        isVisible: false,
+      },
+
+      {
+        type: "vector",
+        name: "Graticule 2.5 × 2.5km · kruispunten (🌐 Bonne)",
+        url: "graticule_bonne_2_5x2_5km.geojson",
+        isVisible: false,
+      },
+
+      {
+        type: "vector",
+        name: "Graticule 5 × 5km · kruispunten (🌐 Bonne)",
+        url: "graticule_bonne_5x5km.geojson",
         isVisible: false,
       },
 
@@ -461,15 +718,30 @@
     // }
 
     layerList.forEach((setting) => {
+      // console.log(index);
       initializeLayer(setting).then((result) => {
         let initedLayers = result.layers;
+
+        // record to each feature in the vector layer with mask
+        // what is the layer index of the raster map that belongs to i
+        if (setting.settings.type == "IIIF") {
+          initedLayers[1]
+            .getSource()
+            .getFeatures()
+            .forEach((feature) => {
+              feature.set(
+                "warpedMapLayerIndex",
+                // the index of where the WarpedMapLayer resides
+                map.getLayers().getArray().length,
+              );
+            });
+        }
         initedLayers.forEach((l) => {
-          // if (l) {
+          l.set("title", `${setting.name} ${setting.settings.type}`);
           map.addLayer(l);
           l.setZIndex(setting.zIndex);
           l.setVisible(setting.isVisible);
           setting.olLayers.push(l);
-          // }
         });
         setting.iconImageUrls = result.iconImageUrls;
         setting.isLoading = false;
@@ -477,13 +749,98 @@
       });
     });
 
-    map.on("click", (event) => {
-      const feature = map.forEachFeatureAtPixel(
-        event.pixel,
-        (feature) => feature,
-      );
-      selectedFeature = feature || null;
-      console.info(selectedFeature);
+    // map.on("pointermove", (evt) => {
+    //   console.log(`move over ${evt.pixel}`);
+    //   map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+    //     console.info(feature, layer);
+    //   });
+    // });
+
+    // Add a click event listener to the map
+    map.on("click", async function (evt) {
+      // workaround for map.getFeaturesAtPixel not working properly
+      // (when clicking we do not get a match)
+      // moreover, from clicked feature to warpedmaplayer is a bit more difficult
+      // with multiple warpedmaplayers loaded
+      // console.log(`click ${evt.pixel} ${evt.coordinate}`);
+      const layers = map.getLayers().getArray();
+      const featuresAtPixel = [];
+      layers.forEach(async (layer) => {
+        let source = layer.getSource?.() ?? null;
+        if (layer.getVisible() == true && source) {
+          const features =
+            source.getFeaturesAtCoordinate?.(evt.coordinate) ?? [];
+          if (features) {
+            featuresAtPixel.push(...features);
+          }
+        }
+      });
+      if (featuresAtPixel.length > 0) {
+        let f = featuresAtPixel[featuresAtPixel.length - 1];
+
+        const shiftHeld = evt.originalEvent.shiftKey;
+        // if (shiftHeld) {
+        //   console.log("Shift key was held during click");
+        // } else {
+        //   console.log("Regular click without Shift");
+        // }
+        // when shift is pressed, we do not want to zoom to extent
+        // if (!shiftHeld) {
+        // map.getView().fit(f.getGeometry?.().getExtent(), {
+        //   duration: 600,
+        //   padding: [50, 50, 50, 50],
+        // });
+        // }
+
+        // the warpedMapLayerIndex of the props can be used to get a reference to the warpedMapLayer
+        let props = f.getProperties();
+        let warpedMapLayer = map.getLayers().item(props.warpedMapLayerIndex);
+        warpedMapLayer.bringMapsToFront([props.mapId]);
+
+        // this is here because resourceFullMask and resourceMask become the same once the resourceMask is set to resourceFullMask
+        // so we remember the initial state from the annotation in the feature properties
+        if (f.get("__uglyWorkAround") == undefined) {
+          f.set("__uglyWorkAround", true);
+          f.set(
+            "__resourceFullMask",
+            warpedMapLayer.getWarpedMap(props.mapId).resourceFullMask,
+          );
+          f.set(
+            "__resourceMask",
+            warpedMapLayer.getWarpedMap(props.mapId).resourceMask,
+          );
+        }
+
+        if (shiftHeld) {
+          warpedMapLayer.setMapResourceMask(
+            props.mapId,
+            f.get("__resourceFullMask"),
+          );
+          map.getView().fit(f.getGeometry?.().getExtent(), {
+            duration: 1000,
+            padding: [150, 150, 150, 150],
+          });
+          
+        } else {
+          warpedMapLayer.setMapResourceMask(
+            props.mapId,
+            f.get("__resourceMask"),
+          );
+          map.getView().fit(f.getGeometry?.().getExtent(), {
+            duration: 1000,
+            padding: [50, 50, 50, 50],
+          });
+        }
+        warpedMapLayer.changed();
+      }
+
+      // const featuresAtPixel = [];
+      // map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+      //   featuresAtPixel.push({
+      //     feature: feature,
+      //     layer: layer,
+      //   });
+      // });
     });
   });
 
@@ -499,6 +856,8 @@
     }
   }
 </script>
+
+<div id="map"></div>
 
 <div class="container">
   <!--
@@ -533,7 +892,6 @@
     {/if}
   </div>
   -->
-  <div id="map"></div>
 
   <div class="menu" id="menu">
     <div class="header">
@@ -544,7 +902,9 @@
         alt="IIIF Maps"
         title="IIIF Maps"
       />
-      Waterstaatskaart van Nederland · 1865 &ndash; 1988
+      <!-- Waterstaatskaart van Nederland · 1865 &ndash; 1988 -->
+      <!-- Historisch Waterlandschap in Kaart -->
+      Bonnebladen
       <button onclick={toggleContent}> Menu </button>
     </div>
     <div class="content-wrapper">

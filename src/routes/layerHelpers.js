@@ -13,10 +13,60 @@ import Style from 'ol/style/Style.js';
 import Stroke from 'ol/style/Stroke.js';
 import CircleStyle from 'ol/style/Circle.js';
 import Fill from 'ol/style/Fill.js';
+import Text from 'ol/style/Text.js';
+
 
 import { XYZ } from 'ol/source.js'
 
 import OSM from 'ol/source/OSM.js';
+
+// Function to convert HSV to RGB
+function hsvToRgb(h, s, v) {
+    let c = v * s;
+    let x = c * (1 - Math.abs((h / 60) % 2 - 1));
+    let m = v - c;
+    let r, g, b;
+
+    if (h < 60) [r, g, b] = [c, x, 0];
+    else if (h < 120) [r, g, b] = [x, c, 0];
+    else if (h < 180) [r, g, b] = [0, c, x];
+    else if (h < 240) [r, g, b] = [0, x, c];
+    else if (h < 300) [r, g, b] = [x, 0, c];
+    else[r, g, b] = [c, 0, x];
+
+    return [
+        Math.round((r + m) * 255),
+        Math.round((g + m) * 255),
+        Math.round((b + m) * 255)
+    ];
+}
+
+
+const styleFunction = function (feature) {
+    return new Style({
+
+        // labels (id in .items of annotation, 1-based)
+        text: new Text({
+            font: '11px sans-serif',
+            // when used as int; = 0 will not show a label
+            text: feature.get('itemsId').toFixed(0),
+            fill: new Fill({ color: '#000' }),
+            stroke: new Stroke({ color: 'beige', width: 4 }),
+        }),
+
+        // fill
+        fill: new Fill({
+            color: 'rgba(255, 0, 211, 0.0)',
+        }),
+
+        // outline
+        stroke: new Stroke({
+            color: 'rgba(255, 0, 221, 0.65)',
+            width: 2
+        })
+    });
+};
+
 
 export async function initializeLayer(source) {
     let olLayer = null;
@@ -26,10 +76,8 @@ export async function initializeLayer(source) {
 
         const parser = new WMTSCapabilities();
         const parsed = parser.read(await capabilities.text());
-        console.info(parsed)
         const options = optionsFromCapabilities(parsed, {
             layer: source.settings.layerName,
-            // matrixSet: 'EPSG:3857'
             matrixSet: source.settings.matrixSet,
         });
         let olLayer = new TileLayer({
@@ -53,7 +101,7 @@ export async function initializeLayer(source) {
     else if (source.settings.type === "XYZ") {
         let olLayer = new TileLayer({
             source: new XYZ({
-                url: source.settings.url, 
+                url: source.settings.url,
                 tileSize: source.settings.tileSize || 256, // Optional: Set tile size (default is 256)
             }),
         });
@@ -68,6 +116,13 @@ export async function initializeLayer(source) {
     }
 
     else if (source.settings.type === "vector") {
+        let hue = Math.floor(Math.random() * 360);
+        let saturation = 1; // full saturation
+        let value = 1;      // full brightness
+        let [r, g, b] = hsvToRgb(hue, saturation, value);
+
+        let randomColor = `rgba(${r}, ${g}, ${b}, 0.5)`;
+
         let layer = new VectorLayer({
             source: new VectorSource({
                 url: source.settings.url,
@@ -76,19 +131,28 @@ export async function initializeLayer(source) {
             style: new Style({
                 image: new CircleStyle({
                     radius: 1.5,
-                    fill: new Fill({ color: 'rgba(255, 0, 0, 0.5)' }),
-                    stroke: new Stroke({ color: 'red', width: 1 })
+                    fill: new Fill({
+                        color: 'darkgreen'
+                        // randomColor 
+
+                    }),
+                    stroke: new Stroke({
+                        color: 'darkgreen'
+                        //randomColor
+                        , width: 1
+                    })
                 }),
                 fill: new Fill({
-                    color: 'rgba(78, 205, 0, 0.24)', // Semi-transparent blue fill
+                    color: 'rgba(78, 205, 0, 0.0)',
                 }),
                 stroke: new Stroke({
                     color: 'darkgreen',
-                    width: 0.25
+                    width: 0.75
                 })
             })
         });
         return { 'layer': layer, 'layers': [layer] };
+
     } else if (source.settings.type == 'IIIF') {
         let olLayer = new WarpedMapLayer();
         olLayer.clear();
@@ -108,13 +172,20 @@ export async function initializeLayer(source) {
         }
 
         // Make a geojson layer of the masks
-        let features = pairs.map((pair) => {
+        // this layer is used for:
+        // - recording the extent (being able to click on the sheets), 
+        // - the object identifier and 
+        // - the layer index
+        let features = pairs.map((pair, i) => {
             let [mapId, mask] = pair;
             return {
                 type: 'Feature',
                 geometry: mask,
                 properties: {
-                    mapId: mapId
+                    itemsId: 1 + i,
+                    mapId: mapId,
+                    // will be filled when adding the map to the layer
+                    warpedMapLayerIndex: null 
                 }
             };
         });
@@ -136,16 +207,12 @@ export async function initializeLayer(source) {
         // The GeoJSON vector layer
         const vectorLayer = new VectorLayer({
             source: vectorSource,
-            style: new Style({
-                fill: null,
-                stroke: new Stroke({
-                    color: 'rgba(255, 0, 221, 0.65)',
-                    width: 0.5
-                })
-            })
+            style: styleFunction
+
         });
 
         return { 'layer': olLayer, 'iconImageUrls': iconImageUrls, 'layers': [olLayer, vectorLayer] };
+    
     } else {
         throw new Error('Undefined layer type')
     }

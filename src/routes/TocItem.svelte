@@ -188,6 +188,7 @@
               </button></legend
             >
             {#if isMapsExpanded}
+              {#if !isVisible}<p>(layer is hidden)</p>{/if}
               {#each layer.iconImageUrls as icon, index}
                 <button
                   style="margin:6px;"
@@ -202,9 +203,11 @@
                       ) || null;
 
                     //// FIXME: ** not really working well at the moment
+                    //// should be harmonized with what happens in map.on('click')
                     // layer.olLayers[0].setMapResourceMask(
                     //   icon.mapId,
-                    //   layer.olLayers[0].getWarpedMap(icon.mapId).resourceFullMask,
+                    //   layer.olLayers[0].getWarpedMap(icon.mapId)
+                    //     .resourceFullMask,
                     // );
 
                     layer.olLayers[0].bringMapsToFront([icon.mapId]);
@@ -218,7 +221,6 @@
                     // layer.olLayers[0].render();
 
                     layer.olLayers[0].changed();
-
                     // setTimeout(layer.olLayers[0].render, 400);
 
                     // console.error(layer.olLayers[0].renderer)
@@ -244,7 +246,7 @@
                 </button>
               {/each}
             {:else}
-              ⋯
+              Click " ▸ " to show thumbnails
             {/if}
           </fieldset>
         {:else}{/if}
